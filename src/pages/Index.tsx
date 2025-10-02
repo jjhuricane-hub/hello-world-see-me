@@ -7,6 +7,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Shield, Clock, FileText, Upload, Brain, Calendar, Check } from "lucide-react";
 import { z } from "zod";
+import logo from "@/assets/logo.png";
+import backdrop from "@/assets/backdrop.png";
 
 const emailSchema = z.object({
   email: z.string().trim().email({ message: "Please enter a valid email address" }).max(255),
@@ -87,39 +89,45 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            {/* Placeholder Logo 4 */}
-            <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
-              <Shield className="w-6 h-6 text-primary" />
+    <div className="min-h-screen bg-background relative">
+      {/* Backdrop */}
+      <div 
+        className="fixed inset-0 z-0 opacity-20"
+        style={{
+          backgroundImage: `url(${backdrop})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      />
+      
+      <div className="relative z-10">
+        {/* Header */}
+        <header className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+          <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <img src={logo} alt="4D LegalTech AI" className="h-12 w-12 object-contain" />
+              <span className="font-sora font-semibold text-lg">4D LegalTech AI</span>
             </div>
-            <span className="font-sora font-semibold text-lg">Justice Forge</span>
+            <Button onClick={scrollToWaitlist} className="font-inter">
+              Get Early Access
+            </Button>
           </div>
-          <Button onClick={scrollToWaitlist} className="font-inter">
-            Get Early Access
-          </Button>
-        </div>
-      </header>
+        </header>
 
-      <main className="pt-16">
-        {/* Hero Section */}
-        <section className="relative py-20 md:py-32 overflow-hidden">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-center">
-              {/* Placeholder Logo 4 - Large */}
-              <div className="w-24 h-24 mx-auto mb-8 rounded-full bg-primary/10 flex items-center justify-center">
-                <Shield className="w-16 h-16 text-primary" />
-              </div>
+        <main className="pt-16">
+          {/* Hero Section */}
+          <section className="relative py-20 md:py-32 overflow-hidden">
+            <div className="container mx-auto px-4">
+              <div className="max-w-4xl mx-auto text-center">
+                <img src={logo} alt="4D LegalTech AI" className="w-32 h-32 mx-auto mb-8 object-contain" />
 
-              <h1 className="font-sora font-bold text-4xl md:text-6xl mb-6 text-foreground">
-                Justice Forge AI Analyzer
-              </h1>
-              <p className="font-inter text-xl md:text-2xl text-muted-foreground mb-8">
-                AI that surfaces truth and timelines to support family-law outcomes.
-              </p>
+                <h1 className="font-sora font-bold text-4xl md:text-6xl mb-6 text-foreground">
+                  4D LegalTech AI
+                </h1>
+                <p className="font-inter text-xl md:text-2xl text-muted-foreground mb-8">
+                  AI that surfaces truth and timelines to support family-law outcomes.
+                </p>
 
               <ul className="text-left max-w-2xl mx-auto mb-10 space-y-3">
                 {[
@@ -261,7 +269,7 @@ const Index = () => {
               </blockquote>
 
               <p className="font-inter text-lg text-muted-foreground max-w-2xl mx-auto">
-                We're building truth-centered technology to reunite families and restore justice. Justice Forge AI Analyzer
+                We're building truth-centered technology to reunite families and restore justice. 4D LegalTech AI
                 brings transparency and clarity to complex family-law situations, helping advocates and parents navigate
                 challenging circumstances with confidence.
               </p>
@@ -338,7 +346,7 @@ const Index = () => {
               ) : (
                 <>
                   <h2 className="font-sora font-bold text-3xl text-center mb-4">
-                    Be first to access Justice Forge AI Analyzer
+                    Be first to access 4D LegalTech AI
                   </h2>
                   <p className="font-inter text-sm text-muted-foreground text-center mb-8">
                     We'll only use your email to send early-access updates. No spam.
@@ -411,35 +419,33 @@ const Index = () => {
             </div>
           </div>
         </section>
-      </main>
+        </main>
 
-      {/* Footer */}
-      <footer className="border-t border-border py-12 bg-card">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col items-center gap-6">
-            {/* Placeholder Logo 3 Badge */}
-            <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center">
-              <Shield className="w-8 h-8 text-primary" />
+        {/* Footer */}
+        <footer className="border-t border-border py-12 bg-card">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-col items-center gap-6">
+              <img src={logo} alt="4D LegalTech AI" className="h-12 w-12 object-contain" />
+
+              <nav className="flex flex-wrap justify-center gap-6">
+                <a href="#" className="font-inter text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  Privacy Policy
+                </a>
+                <a href="#" className="font-inter text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  Terms
+                </a>
+                <a href="#" className="font-inter text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  Contact
+                </a>
+              </nav>
+
+              <p className="font-inter text-sm text-muted-foreground text-center">
+                © {new Date().getFullYear()} 4D LegalTech AI. All rights reserved.
+              </p>
             </div>
-
-            <nav className="flex flex-wrap justify-center gap-6">
-              <a href="#" className="font-inter text-sm text-muted-foreground hover:text-foreground transition-colors">
-                Privacy Policy
-              </a>
-              <a href="#" className="font-inter text-sm text-muted-foreground hover:text-foreground transition-colors">
-                Terms
-              </a>
-              <a href="#" className="font-inter text-sm text-muted-foreground hover:text-foreground transition-colors">
-                Contact
-              </a>
-            </nav>
-
-            <p className="font-inter text-sm text-muted-foreground text-center">
-              © {new Date().getFullYear()} 4D LegalTech AI. All rights reserved.
-            </p>
           </div>
-        </div>
-      </footer>
+        </footer>
+      </div>
     </div>
   );
 };
