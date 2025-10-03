@@ -126,6 +126,11 @@ const Index = () => {
                 <h1 className="font-sora font-bold text-4xl md:text-6xl mb-6 text-foreground">
                   4D LegalTech AI
                 </h1>
+                
+                <p className="font-sora text-2xl md:text-3xl font-bold text-primary mb-4 uppercase tracking-tight">
+                  Parents Are More Than Paychecks, And Children Deserve More Than Chaos
+                </p>
+                
                 <p className="font-inter text-xl md:text-2xl text-muted-foreground mb-8">
                   Revolutionary AI-powered case analysis that empowers parents fighting for their children
                 </p>
