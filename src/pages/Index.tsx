@@ -9,6 +9,7 @@ import { Shield, Clock, FileText, Upload, Brain, Calendar, Check } from "lucide-
 import { z } from "zod";
 import logo from "@/assets/logo.png";
 import backdrop from "@/assets/backdrop.png";
+import { SupportChatbot } from "@/components/SupportChatbot";
 
 const emailSchema = z.object({
   email: z.string().trim().email({ message: "Please enter a valid email address" }).max(255),
@@ -126,15 +127,25 @@ const Index = () => {
                   4D LegalTech AI
                 </h1>
                 <p className="font-inter text-xl md:text-2xl text-muted-foreground mb-8">
-                  AI that surfaces truth and timelines to support family-law outcomes.
+                  Revolutionary AI-powered case analysis that empowers parents fighting for their children
                 </p>
+
+                <div className="bg-card border border-border rounded-lg p-6 mb-8 text-left">
+                  <p className="font-inter text-muted-foreground mb-4">
+                    When you're fighting for your children, every detail matters. But traditional legal help costs tens of thousands of dollars, and even then, attorneys often miss critical patterns buried in thousands of messages, photos, and documents.
+                  </p>
+                  <p className="font-inter text-foreground font-semibold">
+                    4D LegalTech AI changes everything. Our platform analyzes every piece of your case—text messages, emails, photos, videos, voice recordings—to uncover the truth and build an ironclad timeline that no attorney could create manually.
+                  </p>
+                </div>
 
               <ul className="text-left max-w-2xl mx-auto mb-10 space-y-3">
                 {[
-                  "Analyze messages, documents, and media to reveal patterns",
-                  "Auto-generated timelines and event clustering",
-                  "Evidence grading with explainable, defensible insights",
-                  "Private by design—your data, your control",
+                  "Analyzes thousands of messages, documents, and media files in minutes",
+                  "Auto-generates comprehensive timelines showing patterns of behavior",
+                  "Grades evidence quality with explainable, court-ready insights",
+                  "Identifies inconsistencies and contradictions automatically",
+                  "100% private and secure—your data never leaves your control",
                 ].map((item, idx) => (
                   <li key={idx} className="flex items-start gap-3 font-inter">
                     <Check className="w-5 h-5 text-primary mt-0.5 shrink-0" />
@@ -173,41 +184,94 @@ const Index = () => {
           </div>
         </section>
 
+        {/* The Problem */}
+        <section className="py-20 md:py-32 bg-muted/50">
+          <div className="container mx-auto px-4">
+            <h2 className="font-sora font-bold text-3xl md:text-4xl text-center mb-12">
+              The Problem We're Solving
+            </h2>
+            
+            <div className="max-w-4xl mx-auto space-y-6">
+              <div className="bg-card border border-border rounded-lg p-6">
+                <h3 className="font-sora font-semibold text-xl mb-3 flex items-center gap-2">
+                  <span>⚖️</span> Family Law Is Broken for Parents
+                </h3>
+                <p className="font-inter text-muted-foreground">
+                  When you're fighting for custody of your children, you're facing a system that's stacked against you. Attorneys charge $300-500 per hour, and a contested custody case can easily cost $50,000-$150,000. Even with that investment, most attorneys don't have the time or resources to analyze every text message, email, photo, and document that could prove your case.
+                </p>
+              </div>
+
+              <div className="bg-card border border-border rounded-lg p-6">
+                <h3 className="font-sora font-semibold text-xl mb-3 flex items-center gap-2">
+                  <span>📱</span> Evidence Is Everywhere—But Overwhelming
+                </h3>
+                <p className="font-inter text-muted-foreground mb-3">
+                  You have thousands of text messages showing broken promises. Hundreds of photos proving neglect. Voice recordings of threats. Email chains revealing lies. But how do you organize it all? How do you prove patterns of behavior? How do you create a timeline that a judge can understand?
+                </p>
+                <p className="font-inter text-muted-foreground">
+                  Most parents end up with disorganized evidence, missed deadlines, and weak cases—simply because there's too much information and no way to process it effectively.
+                </p>
+              </div>
+
+              <div className="bg-card border border-border rounded-lg p-6">
+                <h3 className="font-sora font-semibold text-xl mb-3 flex items-center gap-2">
+                  <span>💔</span> The Stakes Are Your Children
+                </h3>
+                <p className="font-inter text-muted-foreground">
+                  This isn't about money or property. This is about your kids. Every missed detail could mean less time with them. Every overlooked pattern could cost you custody. Every day that passes without proper case preparation puts your family at risk.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Product Highlights */}
         <section id="highlights" className="py-20 md:py-32">
           <div className="container mx-auto px-4">
-            <h2 className="font-sora font-bold text-3xl md:text-4xl text-center mb-16">
-              What you'll get
+            <h2 className="font-sora font-bold text-3xl md:text-4xl text-center mb-4">
+              How 4D LegalTech AI Empowers You
             </h2>
+            <p className="font-inter text-xl text-muted-foreground text-center mb-12 max-w-3xl mx-auto">
+              Imagine having a team of analysts working 24/7 on your case, never missing a detail, never forgetting a pattern, and organizing everything into court-ready evidence—for a fraction of what an attorney would charge.
+            </p>
 
             <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              <div className="bg-card border border-border rounded-lg p-8 text-center">
+              <div className="bg-card border border-border rounded-lg p-8">
                 <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
                   <Brain className="w-8 h-8 text-primary" />
                 </div>
-                <h3 className="font-sora font-semibold text-xl mb-3">Evidence Intelligence</h3>
-                <p className="font-inter text-muted-foreground">
-                  Analyze chats, files, and transcripts to reveal key signals
+                <h3 className="font-sora font-semibold text-xl mb-3">Deep Evidence Analysis</h3>
+                <p className="font-inter text-muted-foreground mb-3">
+                  Upload text messages, emails, photos, videos, and voice recordings. Our AI analyzes every piece of content to identify patterns, contradictions, and critical evidence that supports your case.
+                </p>
+                <p className="font-inter text-sm text-muted-foreground/60">
+                  What would take an attorney 100+ hours takes our AI minutes.
                 </p>
               </div>
 
-              <div className="bg-card border border-border rounded-lg p-8 text-center">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
-                  <FileText className="w-8 h-8 text-primary" />
-                </div>
-                <h3 className="font-sora font-semibold text-xl mb-3">Explainable AI</h3>
-                <p className="font-inter text-muted-foreground">
-                  Transparent citations and summaries you can trust
-                </p>
-              </div>
-
-              <div className="bg-card border border-border rounded-lg p-8 text-center">
+              <div className="bg-card border border-border rounded-lg p-8">
                 <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
                   <Calendar className="w-8 h-8 text-primary" />
                 </div>
-                <h3 className="font-sora font-semibold text-xl mb-3">Case Timeline</h3>
-                <p className="font-inter text-muted-foreground">
-                  Auto-built timelines with export-ready views
+                <h3 className="font-sora font-semibold text-xl mb-3">Automated Timelines</h3>
+                <p className="font-inter text-muted-foreground mb-3">
+                  See patterns emerge as the AI creates comprehensive timelines showing behavioral trends, broken agreements, and critical incidents—all with citations to the original evidence.
+                </p>
+                <p className="font-inter text-sm text-muted-foreground/60">
+                  Export court-ready timelines that judges can actually understand.
+                </p>
+              </div>
+
+              <div className="bg-card border border-border rounded-lg p-8">
+                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
+                  <FileText className="w-8 h-8 text-primary" />
+                </div>
+                <h3 className="font-sora font-semibold text-xl mb-3">Evidence Grading</h3>
+                <p className="font-inter text-muted-foreground mb-3">
+                  Not all evidence is equal. Our AI grades each piece of evidence for relevance, credibility, and impact—helping you focus on what matters most for your case.
+                </p>
+                <p className="font-inter text-sm text-muted-foreground/60">
+                  Know exactly which evidence will have the biggest impact in court.
                 </p>
               </div>
             </div>
@@ -256,10 +320,9 @@ const Index = () => {
         </section>
 
         {/* Mission Block */}
-        <section className="py-20 md:py-32">
+        <section className="py-20 md:py-32 bg-muted/50">
           <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto text-center">
-              {/* Placeholder Logo 2 */}
+            <div className="max-w-4xl mx-auto text-center">
               <div className="w-20 h-20 mx-auto mb-8 rounded-full bg-primary/10 flex items-center justify-center">
                 <Shield className="w-12 h-12 text-primary" />
               </div>
@@ -268,13 +331,19 @@ const Index = () => {
                 "To the moon and back—love's stronger than lies."
               </blockquote>
 
-              <p className="font-inter text-lg text-muted-foreground max-w-2xl mx-auto">
-                We're building truth-centered technology to reunite families and restore justice. 4D LegalTech AI
-                brings transparency and clarity to complex family-law situations, helping advocates and parents navigate
-                challenging circumstances with confidence.
+              <p className="font-inter text-xl text-foreground max-w-2xl mx-auto mb-8">
+                Our mission is to reunite families with truth-centered technology. We believe every parent deserves access to the same powerful analytical tools that only the wealthy could afford—until now.
               </p>
 
-              <p className="font-inter text-sm text-muted-foreground mt-4">by 4D LegalTech AI</p>
+              <div className="bg-card border border-border rounded-lg p-8 text-left">
+                <h3 className="font-sora font-semibold text-2xl mb-4">Why We Built This</h3>
+                <p className="font-inter text-muted-foreground mb-4">
+                  We've seen too many loving parents lose custody because they couldn't afford proper case preparation. We've watched families torn apart because critical evidence was buried in thousands of messages and never surfaced.
+                </p>
+                <p className="font-inter text-muted-foreground">
+                  4D LegalTech AI exists to change that. We're putting institutional-grade case analysis into the hands of every parent who's fighting for their children. Because love shouldn't lose to money. Truth shouldn't lose to disorganization. And your children deserve to have you fighting with every tool available.
+                </p>
+              </div>
             </div>
           </div>
         </section>
@@ -445,6 +514,9 @@ const Index = () => {
             </div>
           </div>
         </footer>
+
+        {/* Support Chatbot */}
+        <SupportChatbot />
       </div>
     </div>
   );
