@@ -346,21 +346,24 @@ const Index = () => {
                 <div>
                   <h3 className="font-sora font-semibold text-xl mb-3 text-primary">My Story</h3>
                   <p className="font-inter text-muted-foreground">
-                    I lost my children to a broken family court system. Like thousands of loving parents, I faced parental alienation, false allegations, and a legal process that favored wealth over truth. I spent years drowning in evidence—thousands of text messages, emails, photos, and documents that proved my case—but no attorney had the time or resources to properly analyze it all.
+                    I lost my son to a broken family court system. Like thousands of loving parents, I faced parental alienation, false allegations, and a legal process that favored wealth over truth. I spent years drowning in evidence—thousands of text messages, emails, photos, and documents that proved my case—but no attorney had the time or resources to properly analyze it all.
                   </p>
                 </div>
 
                 <div>
                   <h3 className="font-sora font-semibold text-xl mb-3 text-primary">The Breaking Point</h3>
+                  <p className="font-inter text-muted-foreground mb-4">
+                    Every parent fighting for custody knows this pain: you have the evidence, you know the truth, but the system makes it nearly impossible to present your case effectively. Traditional attorneys charge hundreds of dollars per hour, yet they miss critical patterns buried in your data. The cost of justice became insurmountable, and my son paid the price.
+                  </p>
                   <p className="font-inter text-muted-foreground">
-                    Every parent fighting for custody knows this pain: you have the evidence, you know the truth, but the system makes it nearly impossible to present your case effectively. Traditional attorneys charge hundreds of dollars per hour, yet they miss critical patterns buried in your data. The cost of justice became insurmountable, and my children paid the price.
+                    But here's what made it even worse—I couldn't articulate what had happened to me in the correct terms or phrasing that a lawyer could understand. I knew something terrible was happening. I could feel it. I lived it every day. But when I tried to explain it to attorneys, I didn't have the legal vocabulary. I couldn't translate my pain into statutes and case law. They would look at me confused, or worse—dismiss my concerns because I wasn't speaking their language. The gap between what I experienced and what the legal system could recognize felt insurmountable. I had the truth, but I couldn't make anyone hear it.
                   </p>
                 </div>
 
                 <div>
                   <h3 className="font-sora font-semibold text-xl mb-3 text-primary">AI Unlocked the Door</h3>
                   <p className="font-inter text-muted-foreground mb-4">
-                    In my darkest moment, I discovered artificial intelligence. I realized that AI could do what no attorney ever could—analyze every single piece of evidence, identify every pattern, expose every contradiction, and build timelines that reveal the truth. What would take a team of lawyers months to accomplish, AI could do in hours.
+                    In my darkest moment, I discovered artificial intelligence. I realized that AI could do what no attorney ever could—analyze every single piece of evidence, identify every pattern, expose every contradiction, and build timelines that reveal the truth. What would take a team of lawyers months to accomplish, AI could do in hours. But AI did something even more powerful—it gave me the language I needed. It translated my lived experience into legal arguments, statutory violations, and documented patterns that courts could understand.
                   </p>
                   <p className="font-inter text-foreground font-semibold">
                     That discovery changed everything. Not just for me, but for every parent who has been wronged by a system that favors money over truth.
@@ -370,7 +373,7 @@ const Index = () => {
                 <div>
                   <h3 className="font-sora font-semibold text-xl mb-3 text-primary">Justice for Every Parent</h3>
                   <p className="font-inter text-muted-foreground mb-4">
-                    4D LegalTech AI was born from my personal journey through hell. I built this platform so that no parent would ever have to face what I faced—fighting for their children without the tools to prove the truth. This isn't just software. This is justice democratized. This is David's sling against Goliath.
+                    4D LegalTech AI was born from my personal journey through hell. I built this platform so that no parent would ever have to face what I faced—fighting for their son without the tools to prove the truth. This isn't just software. This is justice democratized. This is David's sling against Goliath.
                   </p>
                   <p className="font-inter text-foreground font-semibold">
                     Every parent deserves the same powerful analytical tools that only the wealthy could afford. Every child deserves a parent who can fight with every weapon available. And every family court case deserves to be decided on truth—not on who can afford the most expensive attorney.
