@@ -324,30 +324,64 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Mission Block */}
+        {/* Personal Story */}
         <section className="py-20 md:py-32 bg-muted/50">
           <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-center">
-              <div className="w-20 h-20 mx-auto mb-8 rounded-full bg-primary/10 flex items-center justify-center">
-                <Shield className="w-12 h-12 text-primary" />
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center mb-12">
+                <div className="w-20 h-20 mx-auto mb-8 rounded-full bg-primary/10 flex items-center justify-center">
+                  <Shield className="w-12 h-12 text-primary" />
+                </div>
+                
+                <h2 className="font-sora font-bold text-3xl md:text-4xl mb-6">
+                  From Personal Loss to Justice for All
+                </h2>
+                
+                <blockquote className="font-sora text-2xl md:text-3xl font-semibold mb-6 italic">
+                  "To the moon and back—love's stronger than lies."
+                </blockquote>
               </div>
 
-              <blockquote className="font-sora text-2xl md:text-3xl font-semibold mb-6 italic">
-                "To the moon and back—love's stronger than lies."
-              </blockquote>
+              <div className="bg-card border border-border rounded-lg p-8 space-y-6">
+                <div>
+                  <h3 className="font-sora font-semibold text-xl mb-3 text-primary">My Story</h3>
+                  <p className="font-inter text-muted-foreground">
+                    I lost my children to a broken family court system. Like thousands of loving parents, I faced parental alienation, false allegations, and a legal process that favored wealth over truth. I spent years drowning in evidence—thousands of text messages, emails, photos, and documents that proved my case—but no attorney had the time or resources to properly analyze it all.
+                  </p>
+                </div>
 
-              <p className="font-inter text-xl text-foreground max-w-2xl mx-auto mb-8">
-                Our mission is to reunite families with truth-centered technology. We believe every parent deserves access to the same powerful analytical tools that only the wealthy could afford—until now.
-              </p>
+                <div>
+                  <h3 className="font-sora font-semibold text-xl mb-3 text-primary">The Breaking Point</h3>
+                  <p className="font-inter text-muted-foreground">
+                    Every parent fighting for custody knows this pain: you have the evidence, you know the truth, but the system makes it nearly impossible to present your case effectively. Traditional attorneys charge hundreds of dollars per hour, yet they miss critical patterns buried in your data. The cost of justice became insurmountable, and my children paid the price.
+                  </p>
+                </div>
 
-              <div className="bg-card border border-border rounded-lg p-8 text-left">
-                <h3 className="font-sora font-semibold text-2xl mb-4">Why We Built This</h3>
-                <p className="font-inter text-muted-foreground mb-4">
-                  We've seen too many loving parents lose custody because they couldn't afford proper case preparation. We've watched families torn apart because critical evidence was buried in thousands of messages and never surfaced.
-                </p>
-                <p className="font-inter text-muted-foreground">
-                  4D LegalTech AI exists to change that. We're putting institutional-grade case analysis into the hands of every parent who's fighting for their children. Because love shouldn't lose to money. Truth shouldn't lose to disorganization. And your children deserve to have you fighting with every tool available.
-                </p>
+                <div>
+                  <h3 className="font-sora font-semibold text-xl mb-3 text-primary">AI Unlocked the Door</h3>
+                  <p className="font-inter text-muted-foreground mb-4">
+                    In my darkest moment, I discovered artificial intelligence. I realized that AI could do what no attorney ever could—analyze every single piece of evidence, identify every pattern, expose every contradiction, and build timelines that reveal the truth. What would take a team of lawyers months to accomplish, AI could do in hours.
+                  </p>
+                  <p className="font-inter text-foreground font-semibold">
+                    That discovery changed everything. Not just for me, but for every parent who has been wronged by a system that favors money over truth.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="font-sora font-semibold text-xl mb-3 text-primary">Justice for Every Parent</h3>
+                  <p className="font-inter text-muted-foreground mb-4">
+                    4D LegalTech AI was born from my personal journey through hell. I built this platform so that no parent would ever have to face what I faced—fighting for their children without the tools to prove the truth. This isn't just software. This is justice democratized. This is David's sling against Goliath.
+                  </p>
+                  <p className="font-inter text-foreground font-semibold">
+                    Every parent deserves the same powerful analytical tools that only the wealthy could afford. Every child deserves a parent who can fight with every weapon available. And every family court case deserves to be decided on truth—not on who can afford the most expensive attorney.
+                  </p>
+                </div>
+
+                <div className="border-t border-border pt-6 mt-6">
+                  <p className="font-inter text-lg text-foreground italic text-center">
+                    My personal loss became your pathway to justice. Together, we're exposing the truth and reuniting families—one case at a time.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
