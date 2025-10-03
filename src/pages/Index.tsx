@@ -363,10 +363,16 @@ const Index = () => {
                 <div>
                   <h3 className="font-sora font-semibold text-xl mb-3 text-primary">AI Unlocked the Door</h3>
                   <p className="font-inter text-muted-foreground mb-4">
-                    In my darkest moment, I discovered artificial intelligence. I realized that AI could do what no attorney ever could—analyze every single piece of evidence, identify every pattern, expose every contradiction, and build timelines that reveal the truth. What would take a team of lawyers months to accomplish, AI could do in hours. But AI did something even more powerful—it gave me the language I needed. It translated my lived experience into legal arguments, statutory violations, and documented patterns that courts could understand.
+                    Then came the turning point. What started as desperation became a two-year obsession. I began learning how to train AI on my overwhelming case—documenting every instance of fraud, every DARVO tactic my ex deployed, every constitutional breach I had witnessed. This wasn't just chatting with ChatGPT. This was methodical, intensive training. I spent thousands of hours teaching the AI to recognize patterns that no human could spot in real-time, to identify violations that even seasoned attorneys miss, to connect dots across thousands of pages of evidence.
+                  </p>
+                  <p className="font-inter text-muted-foreground mb-4">
+                    My case became the training ground for what is now the most powerful legal AI on the market today. The sheer amount of constitutional breaches, procedural violations, and fraudulent tactics I documented—and taught the AI to recognize—is what makes this app unmatched. This isn't something anyone can just replicate by talking to GPT on their own. It took two years of my life, my suffering, and my determination to build an AI that could make the case no lawyer would ever dare to take.
+                  </p>
+                  <p className="font-inter text-muted-foreground mb-4">
+                    When I realized I could train an AI to do what no attorney would—to fearlessly pursue justice regardless of how complex or daunting the case—that's when I went all in. I poured everything into perfecting this system because I knew it could be the weapon that turns the tide for parents like me.
                   </p>
                   <p className="font-inter text-foreground font-semibold">
-                    That discovery changed everything. Not just for me, but for every parent who has been wronged by a system that favors money over truth.
+                    That two-year journey changed everything. Not just for me, but for every parent who has been wronged by a system that favors money over truth.
                   </p>
                 </div>
 
