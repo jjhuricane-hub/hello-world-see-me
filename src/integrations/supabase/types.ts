@@ -14,7 +14,72 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      presale_purchases: {
+        Row: {
+          amount_paid: number
+          created_at: string
+          email: string
+          id: string
+          name: string
+          payment_status: string
+          stripe_payment_intent: string | null
+          stripe_session_id: string | null
+          tier: Database["public"]["Enums"]["presale_tier"]
+          updated_at: string
+        }
+        Insert: {
+          amount_paid: number
+          created_at?: string
+          email: string
+          id?: string
+          name: string
+          payment_status?: string
+          stripe_payment_intent?: string | null
+          stripe_session_id?: string | null
+          tier: Database["public"]["Enums"]["presale_tier"]
+          updated_at?: string
+        }
+        Update: {
+          amount_paid?: number
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string
+          payment_status?: string
+          stripe_payment_intent?: string | null
+          stripe_session_id?: string | null
+          tier?: Database["public"]["Enums"]["presale_tier"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      waitlist_signups: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          name: string
+          tier: Database["public"]["Enums"]["presale_tier"]
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          name: string
+          tier?: Database["public"]["Enums"]["presale_tier"]
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string
+          tier?: Database["public"]["Enums"]["presale_tier"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +88,12 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      presale_tier:
+        | "supporter"
+        | "early_access"
+        | "founders_circle"
+        | "lifetime_founder"
+        | "equity_partner"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +220,14 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      presale_tier: [
+        "supporter",
+        "early_access",
+        "founders_circle",
+        "lifetime_founder",
+        "equity_partner",
+      ],
+    },
   },
 } as const
