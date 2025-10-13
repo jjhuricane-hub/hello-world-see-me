@@ -1,91 +1,251 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Shield, Clock, FileText, Upload, Brain, Calendar, Check } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Shield, FileText, Brain, Calendar, Check, X, Award, Zap, Crown, Gem, Star } from "lucide-react";
 import { z } from "zod";
 import logo from "@/assets/logo.png";
 import backdrop from "@/assets/backdrop.png";
 import { SupportChatbot } from "@/components/SupportChatbot";
+import { supabase } from "@/integrations/supabase/client";
 
 const emailSchema = z.object({
   email: z.string().trim().email({ message: "Please enter a valid email address" }).max(255),
-  name: z.string().trim().max(100).optional(),
-  role: z.string().optional(),
+  name: z.string().trim().min(2, { message: "Please enter your name" }).max(100),
 });
+
+const PRICING_TIERS = [
+  {
+    id: "supporter",
+    name: "Supporter",
+    price: 20,
+    badge: "Support the Movement",
+    badgeVariant: "secondary" as const,
+    icon: Award,
+    iconColor: "text-blue-600",
+    bestFor: "Show solidarity with family court reform",
+    features: [
+      "Name on Founding Fathers/Mothers Wall",
+      "Public thank-you recognition",
+      "Access to community updates",
+      "Movement supporter badge",
+      "Basic educational resources",
+    ],
+    cta: "Join Supporters",
+    ctaVariant: "default" as const,
+    isFree: true,
+  },
+  {
+    id: "early_access",
+    name: "Early Access",
+    price: 50,
+    badge: "Most Popular",
+    badgeVariant: "default" as const,
+    icon: Zap,
+    iconColor: "text-emerald-600",
+    bestFor: "Parents ready to take action",
+    features: [
+      "Everything in Supporter PLUS:",
+      "Early platform access (90 days before public)",
+      "3 months premium features included",
+      "Basic IRAC document generation",
+      "Email support",
+      "Legal resource library access",
+    ],
+    cta: "Get Early Access",
+    ctaVariant: "default" as const,
+    highlight: true,
+  },
+  {
+    id: "founders_circle",
+    name: "Founders Circle",
+    price: 100,
+    badge: "Best Value",
+    badgeVariant: "secondary" as const,
+    icon: Crown,
+    iconColor: "text-amber-600",
+    bestFor: "Serious legal advocates",
+    features: [
+      "Everything in Early Access PLUS:",
+      "12 months premium platform access",
+      "Priority customer support",
+      "Founder badge and special recognition",
+      "Advanced DARVO pattern detection",
+      "Multi-layer chronology tools",
+      "Live founder Q&A sessions (quarterly)",
+    ],
+    cta: "Join Founders Circle",
+    ctaVariant: "secondary" as const,
+  },
+  {
+    id: "lifetime_founder",
+    name: "Lifetime Founder",
+    price: 250,
+    badge: "Lifetime Access",
+    badgeVariant: "secondary" as const,
+    icon: Gem,
+    iconColor: "text-purple-600",
+    bestFor: "Long-term legal reform advocates",
+    features: [
+      "Everything in Founders Circle PLUS:",
+      "Lifetime platform access (no recurring fees)",
+      "Featured placement in success stories",
+      "Private AMA sessions with founder",
+      "Advanced damage calculation tools",
+      "Federal filing template library",
+      "Priority feature requests",
+      "White-glove onboarding",
+    ],
+    cta: "Get Lifetime Access",
+    ctaVariant: "secondary" as const,
+  },
+  {
+    id: "equity_partner",
+    name: "Equity Partner",
+    price: 5000,
+    badge: "Investment Opportunity",
+    badgeVariant: "secondary" as const,
+    icon: Star,
+    iconColor: "text-rose-600",
+    bestFor: "Strategic partners & investors",
+    features: [
+      "Everything in Lifetime Founder PLUS:",
+      "Potential equity/revenue share opportunity",
+      "Quarterly strategy calls with founder",
+      "Input on product roadmap direction",
+      "Co-marketing opportunities",
+      "Legal partner referral status",
+      "Custom integration possibilities",
+      "Private investor updates",
+    ],
+    cta: "Become a Partner",
+    ctaVariant: "secondary" as const,
+    premium: true,
+  },
+];
+
+const FEATURE_COMPARISON = [
+  { name: "Founding Wall Recognition", tiers: [true, true, true, true, true] },
+  { name: "Community Updates", tiers: [true, true, true, true, true] },
+  { name: "Educational Resources", tiers: [true, true, true, true, true] },
+  { name: "Early Platform Access", tiers: [false, true, true, true, true] },
+  { name: "Premium Features Duration", tiers: ["N/A", "3 months", "12 months", "Lifetime", "Lifetime"] },
+  { name: "IRAC Document Generation", tiers: [false, true, true, true, true] },
+  { name: "Email Support", tiers: [false, true, true, true, true] },
+  { name: "Priority Support", tiers: [false, false, true, true, true] },
+  { name: "DARVO Pattern Detection", tiers: [false, false, true, true, true] },
+  { name: "Multi-Layer Chronology", tiers: [false, false, true, true, true] },
+  { name: "Founder Q&A Sessions", tiers: [false, false, true, true, true] },
+  { name: "Success Stories Feature", tiers: [false, false, false, true, true] },
+  { name: "Private AMA Access", tiers: [false, false, false, true, true] },
+  { name: "Damage Calculation Tools", tiers: [false, false, false, true, true] },
+  { name: "Federal Filing Templates", tiers: [false, false, false, true, true] },
+  { name: "White-Glove Onboarding", tiers: [false, false, false, true, true] },
+  { name: "Equity/Revenue Share", tiers: [false, false, false, false, true] },
+  { name: "Strategy Calls", tiers: [false, false, false, false, true] },
+  { name: "Roadmap Input", tiers: [false, false, false, false, true] },
+  { name: "Co-Marketing", tiers: [false, false, false, false, true] },
+];
 
 const Index = () => {
   const { toast } = useToast();
-  const [formData, setFormData] = useState({ email: "", name: "", role: "" });
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [formData, setFormData] = useState({ email: "", name: "" });
+  const [selectedTier, setSelectedTier] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0 });
 
-  const trackEvent = (eventName: string, eventData?: Record<string, any>) => {
-    // TODO: Add GA4 Measurement ID
-    console.log("Analytics Event:", eventName, eventData);
-    // window.gtag?.('event', eventName, eventData);
-  };
+  // Countdown timer (set to 30 days from now for demo)
+  useEffect(() => {
+    const targetDate = new Date();
+    targetDate.setDate(targetDate.getDate() + 30);
 
-  const scrollToWaitlist = () => {
-    trackEvent("hero_cta_click");
-    document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth" });
-  };
+    const interval = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = targetDate.getTime() - now;
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    trackEvent("form_submit_attempt");
-    setErrors({});
+      setCountdown({
+        days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+        minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleTierSelect = async (tierId: string) => {
+    if (!formData.email || !formData.name) {
+      toast({
+        title: "Missing information",
+        description: "Please enter your name and email first",
+        variant: "destructive",
+      });
+      document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" });
+      return;
+    }
 
     const validation = emailSchema.safeParse(formData);
     if (!validation.success) {
-      const fieldErrors: Record<string, string> = {};
-      validation.error.errors.forEach((err) => {
-        if (err.path[0]) {
-          fieldErrors[err.path[0] as string] = err.message;
-        }
+      toast({
+        title: "Invalid information",
+        description: validation.error.errors[0].message,
+        variant: "destructive",
       });
-      setErrors(fieldErrors);
       return;
     }
 
     setIsSubmitting(true);
+    setSelectedTier(tierId);
 
     try {
-      // TODO: Replace with actual endpoint (Formspree, Netlify Forms, etc.)
-      // const response = await fetch('YOUR_ENDPOINT_HERE', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({
-      //     ...formData,
-      //     utm_source: new URLSearchParams(window.location.search).get('utm_source'),
-      //     utm_medium: new URLSearchParams(window.location.search).get('utm_medium'),
-      //     utm_campaign: new URLSearchParams(window.location.search).get('utm_campaign'),
-      //   }),
-      // });
+      const tier = PRICING_TIERS.find((t) => t.id === tierId);
+      
+      if (tier?.isFree) {
+        // Handle free supporter tier
+        const { error } = await supabase.functions.invoke("join-waitlist", {
+          body: { 
+            email: formData.email, 
+            name: formData.name,
+            tier: tierId 
+          },
+        });
 
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+        if (error) throw error;
 
-      setIsSubmitted(true);
-      localStorage.setItem("waitlist_submitted", "true");
-      trackEvent("form_submit_success", { email: formData.email });
+        toast({
+          title: "Welcome to the movement!",
+          description: "Check your email for confirmation and next steps.",
+        });
+      } else {
+        // Handle paid tiers with Stripe
+        const { data, error } = await supabase.functions.invoke("create-presale-checkout", {
+          body: { 
+            email: formData.email, 
+            name: formData.name,
+            tier: tierId 
+          },
+        });
 
-      toast({
-        title: "You're on the list!",
-        description: "We'll be in touch soon with early access details.",
-      });
-    } catch (error) {
+        if (error) throw error;
+
+        if (data?.url) {
+          window.location.href = data.url;
+        }
+      }
+    } catch (error: any) {
+      console.error("Error:", error);
       toast({
         title: "Something went wrong",
-        description: "Please try again or contact us directly.",
+        description: "Please try again or contact support.",
         variant: "destructive",
       });
     } finally {
       setIsSubmitting(false);
+      setSelectedTier(null);
     }
   };
 
@@ -96,9 +256,9 @@ const Index = () => {
         className="fixed inset-0 z-0 opacity-20"
         style={{
           backgroundImage: `url(${backdrop})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
         }}
       />
       
@@ -110,8 +270,11 @@ const Index = () => {
               <img src={logo} alt="4D LegalTech AI" className="h-12 w-12 object-contain" />
               <span className="font-sora font-semibold text-lg">4D LegalTech AI</span>
             </div>
-            <Button onClick={scrollToWaitlist} className="font-inter">
-              Get Early Access
+            <Button 
+              onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
+              className="font-inter"
+            >
+              Choose Your Plan
             </Button>
           </div>
         </header>
@@ -124,448 +287,371 @@ const Index = () => {
                 <img src={logo} alt="4D LegalTech AI" className="w-32 h-32 mx-auto mb-8 object-contain" />
 
                 <h1 className="font-sora font-bold text-4xl md:text-6xl mb-6 text-foreground">
-                  4D LegalTech AI
+                  Choose Your Justice Plan
                 </h1>
                 
-                <p className="font-sora text-2xl md:text-3xl font-bold text-primary mb-4 uppercase tracking-tight">
-                  Parents Are More Than Paychecks, And Children Deserve More Than Chaos
+                <p className="font-sora text-2xl md:text-3xl font-bold text-primary mb-4 tracking-tight">
+                  AI-Powered Legal Support for Family Court Cases
                 </p>
                 
                 <p className="font-inter text-xl md:text-2xl text-muted-foreground mb-8">
-                  Revolutionary AI-powered case analysis that empowers parents fighting for their children
+                  Transform your evidence into court-ready federal filings with the world's first automated legal platform designed by a parent who lived it.
                 </p>
 
                 <div className="bg-card border border-border rounded-lg p-6 mb-8 text-left">
                   <p className="font-inter text-muted-foreground mb-4">
-                    When you're fighting for your children, every detail matters. But traditional legal help costs tens of thousands of dollars, and even then, attorneys often miss critical patterns buried in thousands of messages, photos, and documents.
+                    Built by Jason Lynn Peppard after 12+ years of family court litigation, our AI platform converts text messages, emails, and court documents into IRAC analyses, DARVO detection reports, and federal complaint packages.
                   </p>
                   <p className="font-inter text-foreground font-semibold">
-                    4D LegalTech AI changes everything. Our platform analyzes every piece of your case—text messages, emails, photos, videos, voice recordings—to uncover the truth and build an ironclad timeline that no attorney could create manually.
+                    No legal background required.
                   </p>
                 </div>
 
-              <ul className="text-left max-w-2xl mx-auto mb-10 space-y-3">
-                {[
-                  "Analyzes thousands of messages, documents, and media files in minutes",
-                  "Auto-generates comprehensive timelines showing patterns of behavior",
-                  "Grades evidence quality with explainable, court-ready insights",
-                  "Identifies inconsistencies and contradictions automatically",
-                  "100% private and secure—your data never leaves your control",
-                ].map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-3 font-inter">
-                    <Check className="w-5 h-5 text-primary mt-0.5 shrink-0" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button onClick={scrollToWaitlist} size="lg" className="font-inter font-semibold">
-                  Join the Waitlist
-                </Button>
-                <Button
-                  onClick={() => {
-                    trackEvent("see_how_it_works_click");
-                    document.getElementById("highlights")?.scrollIntoView({ behavior: "smooth" });
-                  }}
-                  variant="outline"
-                  size="lg"
-                  className="font-inter"
-                >
-                  See How It Works
-                </Button>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Social Proof Placeholder */}
-        <section className="py-8 border-y border-border bg-card">
-          <div className="container mx-auto px-4">
-            <div className="text-center text-sm text-muted-foreground">
-              {/* Placeholder for trust badges/press mentions */}
-              <p className="font-inter">Trusted by legal professionals and families seeking truth</p>
-            </div>
-          </div>
-        </section>
-
-        {/* The Problem */}
-        <section className="py-20 md:py-32 bg-muted/50">
-          <div className="container mx-auto px-4">
-            <h2 className="font-sora font-bold text-3xl md:text-4xl text-center mb-12">
-              The Problem We're Solving
-            </h2>
-            
-            <div className="max-w-4xl mx-auto space-y-6">
-              <div className="bg-card border border-border rounded-lg p-6">
-                <h3 className="font-sora font-semibold text-xl mb-3 flex items-center gap-2">
-                  <span>⚖️</span> Family Law Is Broken for Parents
-                </h3>
-                <p className="font-inter text-muted-foreground">
-                  When you're fighting for custody of your children, you're facing a system that's stacked against you. Attorneys charge $300-500 per hour, and a contested custody case can easily cost $50,000-$150,000. Even with that investment, most attorneys don't have the time or resources to analyze every text message, email, photo, and document that could prove your case.
-                </p>
-              </div>
-
-              <div className="bg-card border border-border rounded-lg p-6">
-                <h3 className="font-sora font-semibold text-xl mb-3 flex items-center gap-2">
-                  <span>📱</span> Evidence Is Everywhere—But Overwhelming
-                </h3>
-                <p className="font-inter text-muted-foreground mb-3">
-                  You have thousands of text messages showing broken promises. Hundreds of photos proving neglect. Voice recordings of threats. Email chains revealing lies. But how do you organize it all? How do you prove patterns of behavior? How do you create a timeline that a judge can understand?
-                </p>
-                <p className="font-inter text-muted-foreground">
-                  Most parents end up with disorganized evidence, missed deadlines, and weak cases—simply because there's too much information and no way to process it effectively.
-                </p>
-              </div>
-
-              <div className="bg-card border border-border rounded-lg p-6">
-                <h3 className="font-sora font-semibold text-xl mb-3 flex items-center gap-2">
-                  <span>💔</span> The Stakes Are Your Children
-                </h3>
-                <p className="font-inter text-muted-foreground">
-                  This isn't about money or property. This is about your kids. Every missed detail could mean less time with them. Every overlooked pattern could cost you custody. Every day that passes without proper case preparation puts your family at risk.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Product Highlights */}
-        <section id="highlights" className="py-20 md:py-32">
-          <div className="container mx-auto px-4">
-            <h2 className="font-sora font-bold text-3xl md:text-4xl text-center mb-4">
-              How 4D LegalTech AI Empowers You
-            </h2>
-            <p className="font-inter text-xl text-muted-foreground text-center mb-12 max-w-3xl mx-auto">
-              Imagine having a team of analysts working 24/7 on your case, never missing a detail, never forgetting a pattern, and organizing everything into court-ready evidence—for a fraction of what an attorney would charge.
-            </p>
-
-            <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              <div className="bg-card border border-border rounded-lg p-8">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
-                  <Brain className="w-8 h-8 text-primary" />
-                </div>
-                <h3 className="font-sora font-semibold text-xl mb-3">Deep Evidence Analysis</h3>
-                <p className="font-inter text-muted-foreground mb-3">
-                  Upload text messages, emails, photos, videos, and voice recordings. Our AI analyzes every piece of content to identify patterns, contradictions, and critical evidence that supports your case.
-                </p>
-                <p className="font-inter text-sm text-muted-foreground/60">
-                  What would take an attorney 100+ hours takes our AI minutes.
-                </p>
-              </div>
-
-              <div className="bg-card border border-border rounded-lg p-8">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
-                  <Calendar className="w-8 h-8 text-primary" />
-                </div>
-                <h3 className="font-sora font-semibold text-xl mb-3">Automated Timelines</h3>
-                <p className="font-inter text-muted-foreground mb-3">
-                  See patterns emerge as the AI creates comprehensive timelines showing behavioral trends, broken agreements, and critical incidents—all with citations to the original evidence.
-                </p>
-                <p className="font-inter text-sm text-muted-foreground/60">
-                  Export court-ready timelines that judges can actually understand.
-                </p>
-              </div>
-
-              <div className="bg-card border border-border rounded-lg p-8">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
-                  <FileText className="w-8 h-8 text-primary" />
-                </div>
-                <h3 className="font-sora font-semibold text-xl mb-3">Evidence Grading</h3>
-                <p className="font-inter text-muted-foreground mb-3">
-                  Not all evidence is equal. Our AI grades each piece of evidence for relevance, credibility, and impact—helping you focus on what matters most for your case.
-                </p>
-                <p className="font-inter text-sm text-muted-foreground/60">
-                  Know exactly which evidence will have the biggest impact in court.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* How It Works */}
-        <section className="py-20 md:py-32 bg-card border-y border-border">
-          <div className="container mx-auto px-4">
-            <h2 className="font-sora font-bold text-3xl md:text-4xl text-center mb-16">
-              How it works
-            </h2>
-
-            <div className="max-w-4xl mx-auto grid md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary flex items-center justify-center">
-                  <Upload className="w-8 h-8 text-primary-foreground" />
-                </div>
-                <h3 className="font-sora font-semibold text-lg mb-2">1. Upload Data</h3>
-                <p className="font-inter text-muted-foreground text-sm">
-                  Securely upload messages, documents, or media files
-                </p>
-              </div>
-
-              <div className="text-center">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary flex items-center justify-center">
-                  <Brain className="w-8 h-8 text-primary-foreground" />
-                </div>
-                <h3 className="font-sora font-semibold text-lg mb-2">2. AI Analyzes</h3>
-                <p className="font-inter text-muted-foreground text-sm">
-                  Our AI extracts patterns, events, and evidence markers
-                </p>
-              </div>
-
-              <div className="text-center">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary flex items-center justify-center">
-                  <Clock className="w-8 h-8 text-primary-foreground" />
-                </div>
-                <h3 className="font-sora font-semibold text-lg mb-2">3. Get Insights</h3>
-                <p className="font-inter text-muted-foreground text-sm">
-                  Review timelines, evidence grades, and exportable reports
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Personal Story */}
-        <section className="py-20 md:py-32 bg-muted/50">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <div className="text-center mb-12">
-                <div className="w-20 h-20 mx-auto mb-8 rounded-full bg-primary/10 flex items-center justify-center">
-                  <Shield className="w-12 h-12 text-primary" />
-                </div>
-                
-                <h2 className="font-sora font-bold text-3xl md:text-4xl mb-6">
-                  From Personal Loss to Justice for All
-                </h2>
-                
-                <blockquote className="font-sora text-2xl md:text-3xl font-semibold mb-6 italic">
-                  "To the moon and back—love's stronger than lies."
-                </blockquote>
-              </div>
-
-              <div className="bg-card border border-border rounded-lg p-8 space-y-6">
-                <div>
-                  <h3 className="font-sora font-semibold text-xl mb-3 text-primary">My Story</h3>
-                  <p className="font-inter text-muted-foreground">
-                    I lost my son to a broken family court system. Like thousands of loving parents, I faced parental alienation, false allegations, and a legal process that favored wealth over truth. I spent years drowning in evidence—thousands of text messages, emails, photos, and documents that proved my case—but no attorney had the time or resources to properly analyze it all.
+                {/* Countdown Timer */}
+                <div className="bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20 rounded-lg p-6 mb-8">
+                  <p className="font-sora font-semibold text-sm uppercase tracking-wide mb-3 text-primary">
+                    ⚡ Pre-Launch Pricing Available Until:
                   </p>
-                </div>
-
-                <div>
-                  <h3 className="font-sora font-semibold text-xl mb-3 text-primary">The Breaking Point</h3>
-                  <p className="font-inter text-muted-foreground mb-4">
-                    Every parent fighting for custody knows this pain: you have the evidence, you know the truth, but the system makes it nearly impossible to present your case effectively. Traditional attorneys charge hundreds of dollars per hour, yet they miss critical patterns buried in your data. The cost of justice became insurmountable, and my son paid the price.
-                  </p>
-                  <p className="font-inter text-muted-foreground">
-                    But here's what made it even worse—I couldn't articulate what had happened to me in the correct terms or phrasing that a lawyer could understand. I knew something terrible was happening. I could feel it. I lived it every day. But when I tried to explain it to attorneys, I didn't have the legal vocabulary. I couldn't translate my pain into statutes and case law. They would look at me confused, or worse—dismiss my concerns because I wasn't speaking their language. The gap between what I experienced and what the legal system could recognize felt insurmountable. I had the truth, but I couldn't make anyone hear it.
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="font-sora font-semibold text-xl mb-3 text-primary">AI Unlocked the Door</h3>
-                  <p className="font-inter text-muted-foreground mb-4">
-                    Then came the turning point. What started as desperation became a two-year obsession. I began learning how to train AI on my overwhelming case—documenting every instance of fraud, every DARVO tactic my ex deployed, every constitutional breach I had witnessed. This wasn't just chatting with ChatGPT. This was methodical, intensive training. I spent thousands of hours teaching the AI to recognize patterns that no human could spot in real-time, to identify violations that even seasoned attorneys miss, to connect dots across thousands of pages of evidence.
-                  </p>
-                  <p className="font-inter text-muted-foreground mb-4">
-                    My case became the training ground for what is now the most powerful legal AI on the market today. The sheer amount of constitutional breaches, procedural violations, and fraudulent tactics I documented—and taught the AI to recognize—is what makes this app unmatched. This isn't something anyone can just replicate by talking to GPT on their own. It took two years of my life, my suffering, and my determination to build an AI that could make the case no lawyer would ever dare to take.
-                  </p>
-                  <p className="font-inter text-muted-foreground mb-4">
-                    When I realized I could train an AI to do what no attorney would—to fearlessly pursue justice regardless of how complex or daunting the case—that's when I went all in. I poured everything into perfecting this system because I knew it could be the weapon that turns the tide for parents like me.
-                  </p>
-                  <p className="font-inter text-foreground font-semibold">
-                    That two-year journey changed everything. Not just for me, but for every parent who has been wronged by a system that favors money over truth.
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="font-sora font-semibold text-xl mb-3 text-primary">Justice for Every Parent</h3>
-                  <p className="font-inter text-muted-foreground mb-4">
-                    4D LegalTech AI was born from my personal journey through hell. I built this platform so that no parent would ever have to face what I faced—fighting for their son without the tools to prove the truth. This isn't just software. This is justice democratized. This is David's sling against Goliath.
-                  </p>
-                  <p className="font-inter text-foreground font-semibold">
-                    Every parent deserves the same powerful analytical tools that only the wealthy could afford. Every child deserves a parent who can fight with every weapon available. And every family court case deserves to be decided on truth—not on who can afford the most expensive attorney.
-                  </p>
-                </div>
-
-                <div className="border-t border-border pt-6 mt-6">
-                  <p className="font-inter text-lg text-foreground italic text-center">
-                    My personal loss became your pathway to justice. Together, we're exposing the truth and reuniting families—one case at a time.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQs */}
-        <section className="py-20 md:py-32 bg-card border-y border-border">
-          <div className="container mx-auto px-4">
-            <h2 className="font-sora font-bold text-3xl md:text-4xl text-center mb-12">
-              Frequently Asked Questions
-            </h2>
-
-            <Accordion type="single" collapsible className="max-w-2xl mx-auto">
-              <AccordionItem value="pricing">
-                <AccordionTrigger
-                  className="font-inter font-semibold"
-                  onClick={() => trackEvent("faq_toggle", { question: "pricing" })}
-                >
-                  What does it cost?
-                </AccordionTrigger>
-                <AccordionContent className="font-inter text-muted-foreground">
-                  Founders' waitlist: pricing to be announced. Early adopters will receive special discounts and
-                  exclusive benefits.
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem value="privacy">
-                <AccordionTrigger
-                  className="font-inter font-semibold"
-                  onClick={() => trackEvent("faq_toggle", { question: "privacy" })}
-                >
-                  Is my data private?
-                </AccordionTrigger>
-                <AccordionContent className="font-inter text-muted-foreground">
-                  We use secure processing with industry-standard encryption. You maintain full control and can delete
-                  your data at any time. Your privacy and confidentiality are our top priorities.
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem value="launch">
-                <AccordionTrigger
-                  className="font-inter font-semibold"
-                  onClick={() => trackEvent("faq_toggle", { question: "launch" })}
-                >
-                  When can I start?
-                </AccordionTrigger>
-                <AccordionContent className="font-inter text-muted-foreground">
-                  Early access invites will roll out soon. Join the waitlist to be among the first to receive an
-                  invitation when we launch.
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-          </div>
-        </section>
-
-        {/* Email Sign-up */}
-        <section id="waitlist" className="py-20 md:py-32">
-          <div className="container mx-auto px-4">
-            <div className="max-w-md mx-auto">
-              {isSubmitted ? (
-                <div className="text-center bg-card border border-border rounded-lg p-8">
-                  <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
-                    <Check className="w-10 h-10 text-primary" />
+                  <div className="flex justify-center gap-4">
+                    <div className="text-center">
+                      <div className="font-sora text-3xl font-bold text-foreground">{countdown.days}</div>
+                      <div className="font-inter text-xs text-muted-foreground uppercase">Days</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="font-sora text-3xl font-bold text-foreground">{countdown.hours}</div>
+                      <div className="font-inter text-xs text-muted-foreground uppercase">Hours</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="font-sora text-3xl font-bold text-foreground">{countdown.minutes}</div>
+                      <div className="font-inter text-xs text-muted-foreground uppercase">Minutes</div>
+                    </div>
                   </div>
-                  <h3 className="font-sora font-bold text-2xl mb-2">You're on the list!</h3>
-                  <p className="font-inter text-muted-foreground">
-                    We'll be in touch soon with early access details.
-                  </p>
                 </div>
-              ) : (
-                <>
-                  <h2 className="font-sora font-bold text-3xl text-center mb-4">
-                    Be first to access 4D LegalTech AI
-                  </h2>
-                  <p className="font-inter text-sm text-muted-foreground text-center mb-8">
-                    We'll only use your email to send early-access updates. No spam.
-                  </p>
-
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <div>
-                      <Label htmlFor="email" className="font-inter">
-                        Email <span className="text-destructive">*</span>
-                      </Label>
-                      <Input
-                        id="email"
-                        type="email"
-                        placeholder="you@example.com"
-                        value={formData.email}
-                        onChange={(e) => {
-                          setFormData({ ...formData, email: e.target.value });
-                          setErrors({ ...errors, email: "" });
-                        }}
-                        className="mt-1.5 font-inter"
-                        required
-                        aria-invalid={!!errors.email}
-                        aria-describedby={errors.email ? "email-error" : undefined}
-                      />
-                      {errors.email && (
-                        <p id="email-error" className="text-sm text-destructive mt-1 font-inter">
-                          {errors.email}
-                        </p>
-                      )}
-                    </div>
-
-                    <div>
-                      <Label htmlFor="name" className="font-inter">
-                        Name (optional)
-                      </Label>
-                      <Input
-                        id="name"
-                        type="text"
-                        placeholder="Your name"
-                        value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        className="mt-1.5 font-inter"
-                      />
-                    </div>
-
-                    <div>
-                      <Label htmlFor="role" className="font-inter">
-                        Role (optional)
-                      </Label>
-                      <Select value={formData.role} onValueChange={(value) => setFormData({ ...formData, role: value })}>
-                        <SelectTrigger id="role" className="mt-1.5 font-inter">
-                          <SelectValue placeholder="Select your role" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="attorney">Attorney</SelectItem>
-                          <SelectItem value="advocate">Advocate</SelectItem>
-                          <SelectItem value="parent">Parent</SelectItem>
-                          <SelectItem value="researcher">Researcher</SelectItem>
-                          <SelectItem value="other">Other</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    <Button type="submit" className="w-full font-inter font-semibold" disabled={isSubmitting}>
-                      {isSubmitting ? "Joining..." : "Join the Waitlist"}
-                    </Button>
-                  </form>
-                </>
-              )}
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+
+          {/* Trust Indicators */}
+          <section className="py-8 border-y border-border bg-card">
+            <div className="container mx-auto px-4">
+              <div className="grid md:grid-cols-4 gap-6 max-w-4xl mx-auto text-center">
+                <div>
+                  <div className="font-sora font-bold text-2xl text-primary mb-1">12+</div>
+                  <div className="font-inter text-sm text-muted-foreground">Years Experience</div>
+                </div>
+                <div>
+                  <div className="font-sora font-bold text-2xl text-primary mb-1">Federal</div>
+                  <div className="font-inter text-sm text-muted-foreground">Court-Ready Outputs</div>
+                </div>
+                <div>
+                  <div className="font-sora font-bold text-2xl text-primary mb-1">IRAC</div>
+                  <div className="font-inter text-sm text-muted-foreground">Pattern Recognition</div>
+                </div>
+                <div>
+                  <div className="font-sora font-bold text-2xl text-primary mb-1">Multi-Agent</div>
+                  <div className="font-inter text-sm text-muted-foreground">AI Workflow System</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Pricing Section */}
+          <section id="pricing" className="py-20 md:py-32">
+            <div className="container mx-auto px-4">
+              <h2 className="font-sora font-bold text-3xl md:text-4xl text-center mb-4">
+                Choose Your Tier
+              </h2>
+              <p className="font-inter text-xl text-muted-foreground text-center mb-12 max-w-3xl mx-auto">
+                Join the movement to expose family court fraud with AI-powered legal tools
+              </p>
+
+              {/* Name and Email Form */}
+              <div className="max-w-md mx-auto mb-12 bg-card border border-border rounded-lg p-6">
+                <h3 className="font-sora font-semibold text-lg mb-4">Enter Your Information</h3>
+                <div className="space-y-4">
+                  <div>
+                    <Label htmlFor="name">Full Name</Label>
+                    <Input
+                      id="name"
+                      type="text"
+                      placeholder="John Doe"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      required
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="email">Email Address</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="john@example.com"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Pricing Cards */}
+              <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6 max-w-7xl mx-auto mb-16">
+                {PRICING_TIERS.map((tier) => {
+                  const Icon = tier.icon;
+                  return (
+                    <Card 
+                      key={tier.id} 
+                      className={`relative ${tier.highlight ? "border-primary shadow-lg scale-105" : ""} ${tier.premium ? "bg-gradient-to-br from-card to-muted" : ""}`}
+                    >
+                      {tier.highlight && (
+                        <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                          <Badge className="font-semibold">{tier.badge}</Badge>
+                        </div>
+                      )}
+                      {!tier.highlight && tier.badge && (
+                        <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                          <Badge variant={tier.badgeVariant}>{tier.badge}</Badge>
+                        </div>
+                      )}
+                      <CardHeader className="text-center pt-8">
+                        <div className={`w-12 h-12 mx-auto mb-3 rounded-full bg-primary/10 flex items-center justify-center`}>
+                          <Icon className={`w-6 h-6 ${tier.iconColor}`} />
+                        </div>
+                        <CardTitle className="font-sora">{tier.name}</CardTitle>
+                        <div className="font-sora text-3xl font-bold text-primary">
+                          ${tier.price}
+                        </div>
+                        <CardDescription className="font-inter text-sm">
+                          {tier.bestFor}
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <ul className="space-y-2">
+                          {tier.features.map((feature, idx) => (
+                            <li key={idx} className="flex items-start gap-2 text-sm font-inter">
+                              {feature.includes("PLUS:") ? (
+                                <span className="font-semibold text-primary">{feature}</span>
+                              ) : (
+                                <>
+                                  <Check className="w-4 h-4 text-primary mt-0.5 shrink-0" />
+                                  <span>{feature}</span>
+                                </>
+                              )}
+                            </li>
+                          ))}
+                        </ul>
+                      </CardContent>
+                      <CardFooter>
+                        <Button 
+                          variant={tier.ctaVariant}
+                          className="w-full font-inter"
+                          onClick={() => handleTierSelect(tier.id)}
+                          disabled={isSubmitting && selectedTier === tier.id}
+                        >
+                          {isSubmitting && selectedTier === tier.id ? "Processing..." : tier.cta}
+                        </Button>
+                      </CardFooter>
+                    </Card>
+                  );
+                })}
+              </div>
+
+              {/* Feature Comparison Table */}
+              <div className="max-w-6xl mx-auto">
+                <h3 className="font-sora font-bold text-2xl text-center mb-8">
+                  Feature Comparison
+                </h3>
+                <div className="overflow-x-auto">
+                  <table className="w-full border border-border rounded-lg">
+                    <thead>
+                      <tr className="bg-muted">
+                        <th className="p-4 text-left font-sora font-semibold">Feature</th>
+                        {PRICING_TIERS.map((tier) => (
+                          <th key={tier.id} className="p-4 text-center font-sora font-semibold">
+                            {tier.name}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {FEATURE_COMPARISON.map((feature, idx) => (
+                        <tr key={idx} className="border-t border-border">
+                          <td className="p-4 font-inter text-sm">{feature.name}</td>
+                          {feature.tiers.map((value, tierIdx) => (
+                            <td key={tierIdx} className="p-4 text-center">
+                              {typeof value === "boolean" ? (
+                                value ? (
+                                  <Check className="w-5 h-5 text-primary mx-auto" />
+                                ) : (
+                                  <X className="w-5 h-5 text-muted-foreground mx-auto" />
+                                )
+                              ) : (
+                                <span className="font-inter text-sm">{value}</span>
+                              )}
+                            </td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Social Proof */}
+          <section className="py-20 md:py-32 bg-muted/50">
+            <div className="container mx-auto px-4">
+              <div className="max-w-4xl mx-auto text-center">
+                <h2 className="font-sora font-bold text-3xl md:text-4xl mb-6">
+                  Join Thousands Fighting Family Court Corruption
+                </h2>
+                <p className="font-inter text-xl text-muted-foreground mb-8">
+                  Built from real federal case experience. Turning documentation into justice since 2025.
+                </p>
+                
+                <blockquote className="bg-card border border-border rounded-lg p-8 mb-8">
+                  <p className="font-sora text-2xl font-semibold mb-4 italic text-foreground">
+                    "I built this because I lived it. Every feature comes from real court battles."
+                  </p>
+                  <footer className="font-inter text-muted-foreground">
+                    <strong className="text-primary">Jason Lynn Peppard</strong>, Founder
+                  </footer>
+                </blockquote>
+
+                <div className="grid md:grid-cols-3 gap-6">
+                  <div className="bg-card border border-border rounded-lg p-6">
+                    <div className="font-sora text-2xl font-bold text-primary mb-2">Used by</div>
+                    <div className="font-inter text-muted-foreground">Legal professionals and self-represented litigants</div>
+                  </div>
+                  <div className="bg-card border border-border rounded-lg p-6">
+                    <div className="font-sora text-2xl font-bold text-primary mb-2">Built from</div>
+                    <div className="font-inter text-muted-foreground">12+ years of family court documentation</div>
+                  </div>
+                  <div className="bg-card border border-border rounded-lg p-6">
+                    <Shield className="w-8 h-8 text-primary mx-auto mb-2" />
+                    <div className="font-inter text-muted-foreground">30-Day Money-Back Guarantee</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* FAQ Section */}
+          <section className="py-20 md:py-32">
+            <div className="container mx-auto px-4">
+              <h2 className="font-sora font-bold text-3xl md:text-4xl text-center mb-12">
+                Frequently Asked Questions
+              </h2>
+
+              <div className="max-w-3xl mx-auto">
+                <Accordion type="single" collapsible>
+                  <AccordionItem value="item-1">
+                    <AccordionTrigger className="font-sora font-semibold">
+                      What is the 4D LegalTech AI Justice Engine?
+                    </AccordionTrigger>
+                    <AccordionContent className="font-inter text-muted-foreground">
+                      The Justice Engine is an AI-powered legal analysis platform that helps parents fighting family court cases by automatically analyzing evidence, detecting DARVO patterns, creating timelines, and generating court-ready documents. Built by a parent who spent 12+ years in family court litigation.
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="item-2">
+                    <AccordionTrigger className="font-sora font-semibold">
+                      How does the AI detect DARVO patterns?
+                    </AccordionTrigger>
+                    <AccordionContent className="font-inter text-muted-foreground">
+                      Our multi-agent AI workflow analyzes communications for Deny, Attack, Reverse Victim and Offender (DARVO) tactics commonly used in family court. It identifies patterns of manipulation, gaslighting, and false accusations with citations to specific evidence.
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="item-3">
+                    <AccordionTrigger className="font-sora font-semibold">
+                      Are the outputs court-ready?
+                    </AccordionTrigger>
+                    <AccordionContent className="font-inter text-muted-foreground">
+                      Yes! The platform generates IRAC (Issue, Rule, Application, Conclusion) analyses and federal complaint packages based on real court filings. All outputs include proper citations and formatting suitable for court submission. However, we recommend review by a licensed attorney.
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="item-4">
+                    <AccordionTrigger className="font-sora font-semibold">
+                      What's the difference between Early Access and Founders Circle?
+                    </AccordionTrigger>
+                    <AccordionContent className="font-inter text-muted-foreground">
+                      Early Access ($50) gives you 90 days early platform access with 3 months of premium features. Founders Circle ($100) includes 12 months of premium access, priority support, advanced DARVO detection, and quarterly Q&A sessions with the founder. It's the best value for serious advocates.
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="item-5">
+                    <AccordionTrigger className="font-sora font-semibold">
+                      Can I upgrade my plan later?
+                    </AccordionTrigger>
+                    <AccordionContent className="font-inter text-muted-foreground">
+                      Yes! You can upgrade to a higher tier at any time. We'll credit your original purchase amount toward the new tier price.
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="item-6">
+                    <AccordionTrigger className="font-sora font-semibold">
+                      What if I need a refund?
+                    </AccordionTrigger>
+                    <AccordionContent className="font-inter text-muted-foreground">
+                      We offer a 30-day money-back guarantee on all paid tiers. If you're not satisfied, contact us at info@lastchanceproject.com for a full refund.
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </div>
+            </div>
+          </section>
+
+          {/* Bottom CTA */}
+          <section className="py-20 md:py-32 bg-gradient-to-r from-primary/10 to-primary/5 border-y border-primary/20">
+            <div className="container mx-auto px-4">
+              <div className="max-w-3xl mx-auto text-center">
+                <h2 className="font-sora font-bold text-3xl md:text-4xl mb-6">
+                  Ready to Turn Your Evidence Into Action?
+                </h2>
+                <p className="font-inter text-xl text-muted-foreground mb-8">
+                  Choose your plan and join the movement to expose family court fraud with AI-powered legal tools.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
+                  <Button 
+                    size="lg"
+                    onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
+                    className="font-inter font-semibold"
+                  >
+                    Choose Your Plan
+                  </Button>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    onClick={() => window.open("https://www.youtube.com/watch?v=demo", "_blank")}
+                    className="font-inter"
+                  >
+                    Watch Demo
+                  </Button>
+                </div>
+                <p className="font-inter text-sm text-muted-foreground">
+                  Questions? Contact Jason at{" "}
+                  <a href="mailto:info@lastchanceproject.com" className="text-primary hover:underline">
+                    info@lastchanceproject.com
+                  </a>
+                </p>
+              </div>
+            </div>
+          </section>
         </main>
 
-        {/* Footer */}
-        <footer className="border-t border-border py-12 bg-card">
-          <div className="container mx-auto px-4">
-            <div className="flex flex-col items-center gap-6">
-              <img src={logo} alt="4D LegalTech AI" className="h-12 w-12 object-contain" />
-
-              <nav className="flex flex-wrap justify-center gap-6">
-                <a href="#" className="font-inter text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Privacy Policy
-                </a>
-                <a href="#" className="font-inter text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Terms
-                </a>
-                <a href="#" className="font-inter text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Contact
-                </a>
-              </nav>
-
-              <p className="font-inter text-sm text-muted-foreground text-center">
-                © {new Date().getFullYear()} 4D LegalTech AI. All rights reserved.
-              </p>
-            </div>
+        <footer className="py-8 border-t border-border">
+          <div className="container mx-auto px-4 text-center">
+            <p className="font-inter text-sm text-muted-foreground">
+              © 2025 4D LegalTech AI. Built by parents, for parents.
+            </p>
           </div>
         </footer>
-
-        {/* Support Chatbot */}
-        <SupportChatbot />
       </div>
+
+      <SupportChatbot />
     </div>
   );
 };
