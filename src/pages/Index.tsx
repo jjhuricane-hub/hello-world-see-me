@@ -300,7 +300,7 @@ const Index = () => {
 
                 <div className="bg-card border border-border rounded-lg p-6 mb-8 text-left">
                   <p className="font-inter text-muted-foreground mb-4">
-                    built by a parent who's love for his son ran wider than every lie, deeper than every court file, and stronger than any judge's pen. through prayer, perserverance, and divine guidance, 4D legaltech ai was born-proof that faith can forge justice, love can outlast lies, and NO earthly system can rewrite what GOD has already redeemed.
+                    Built by a parent whose love for his son ran wider than every lie, deeper than every court file, and stronger than any judge's pen. Through prayer, perseverance, and divine guidance, 4D LegalTech AI was born—proof that faith can forge justice, love can outlast lies, and NO earthly system can rewrite what GOD has already redeemed.
                   </p>
                   <p className="font-inter text-foreground font-semibold">
                     No legal background required.
