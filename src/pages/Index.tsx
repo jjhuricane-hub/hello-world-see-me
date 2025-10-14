@@ -300,7 +300,7 @@ const Index = () => {
 
                 <div className="bg-card border border-border rounded-lg p-6 mb-8 text-left">
                   <p className="font-inter text-muted-foreground mb-4">
-                    Built by Jason Lynn Peppard after 12+ years of family court litigation, our AI platform converts text messages, emails, and court documents into IRAC analyses, DARVO detection reports, and federal complaint packages.
+                    built by a parent who's love for his son ran wider than every lie, deeper than every court file, and stronger than any judge's pen. through prayer, perserverance, and divine guidance, 4D legaltech ai was born-proof that faith can forge justice, love can outlast lies, and NO earthly system can rewrite what GOD has already redeemed.
                   </p>
                   <p className="font-inter text-foreground font-semibold">
                     No legal background required.
