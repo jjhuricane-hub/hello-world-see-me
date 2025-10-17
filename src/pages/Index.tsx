@@ -157,17 +157,6 @@ const Index = () => {
   const [selectedTier, setSelectedTier] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0 });
-  const [scrollY, setScrollY] = useState(0);
-
-  // Parallax scroll effect
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   // Countdown timer (set to 30 days from now for demo)
   useEffect(() => {
@@ -270,8 +259,6 @@ const Index = () => {
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
-          transform: `translateY(${scrollY * 0.5}px)`,
-          transition: "transform 0.1s ease-out",
         }}
       />
       
