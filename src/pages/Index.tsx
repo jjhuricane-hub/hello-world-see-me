@@ -18,138 +18,269 @@ const emailSchema = z.object({
   name: z.string().trim().min(2, { message: "Please enter your name" }).max(100),
 });
 
-const PRICING_TIERS = [
+// PRESALE TIERS - 7-Day "Founders Drop" (TikTok-Exclusive)
+const PRESALE_TIERS = [
   {
-    id: "supporter",
-    name: "Supporter",
-    price: 20,
-    badge: "Support the Movement",
-    badgeVariant: "secondary" as const,
-    icon: Award,
-    iconColor: "text-blue-600",
-    bestFor: "Show solidarity with family court reform",
-    features: [
-      "Name on Founding Fathers/Mothers Wall",
-      "Public thank-you recognition",
-      "Access to community updates",
-      "Movement supporter badge",
-      "Basic educational resources",
-    ],
-    cta: "Join Supporters",
-    ctaVariant: "default" as const,
-    isFree: true,
-  },
-  {
-    id: "early_access",
-    name: "Early Access",
-    price: 50,
-    badge: "Most Popular",
-    badgeVariant: "default" as const,
-    icon: Zap,
-    iconColor: "text-emerald-600",
-    bestFor: "Parents ready to take action",
-    features: [
-      "Everything in Supporter PLUS:",
-      "Early platform access (90 days before public)",
-      "3 months premium features included",
-      "Basic IRAC document generation",
-      "Email support",
-      "Legal resource library access",
-    ],
-    cta: "Get Early Access",
-    ctaVariant: "default" as const,
-    highlight: true,
-  },
-  {
-    id: "founders_circle",
-    name: "Founders Circle",
-    price: 100,
-    badge: "Best Value",
-    badgeVariant: "secondary" as const,
-    icon: Crown,
-    iconColor: "text-amber-600",
-    bestFor: "Serious legal advocates",
-    features: [
-      "Everything in Early Access PLUS:",
-      "12 months premium platform access",
-      "Priority customer support",
-      "Founder badge and special recognition",
-      "Advanced DARVO pattern detection",
-      "Multi-layer chronology tools",
-      "Live founder Q&A sessions (quarterly)",
-    ],
-    cta: "Join Founders Circle",
-    ctaVariant: "secondary" as const,
-  },
-  {
-    id: "lifetime_founder",
-    name: "Lifetime Founder",
-    price: 250,
+    id: "analyzer_lifetime_founder",
+    name: "🧠 Analyzer Lifetime Founder",
+    price: 49,
     badge: "Lifetime Access",
     badgeVariant: "secondary" as const,
     icon: Gem,
     iconColor: "text-purple-600",
-    bestFor: "Long-term legal reform advocates",
+    bestFor: "Founders badge + priority updates",
+    seats: "500 seats",
     features: [
-      "Everything in Founders Circle PLUS:",
-      "Lifetime platform access (no recurring fees)",
-      "Featured placement in success stories",
-      "Private AMA sessions with founder",
-      "Advanced damage calculation tools",
-      "Federal filing template library",
-      "Priority feature requests",
-      "White-glove onboarding",
+      "Lifetime access to Parental Alienation Analyzer",
+      "Founders badge & recognition",
+      "Priority updates & feature access",
+      "Never pay again",
+      "One-time payment only",
     ],
-    cta: "Get Lifetime Access",
+    cta: "Claim Lifetime Access",
     ctaVariant: "secondary" as const,
+    isPresale: true,
   },
   {
-    id: "equity_partner",
-    name: "Equity Partner",
-    price: 5000,
-    badge: "Investment Opportunity",
-    badgeVariant: "secondary" as const,
-    icon: Star,
-    iconColor: "text-rose-600",
-    bestFor: "Strategic partners & investors",
+    id: "analyzer_annual_founder",
+    name: "🕊️ Analyzer Annual Founder",
+    price: 20,
+    badge: "Early Adopter",
+    badgeVariant: "default" as const,
+    icon: Award,
+    iconColor: "text-blue-600",
+    bestFor: "1-year Analyzer access",
+    seats: "1,000 seats",
     features: [
-      "Everything in Lifetime Founder PLUS:",
-      "Potential equity/revenue share opportunity",
-      "Quarterly strategy calls with founder",
-      "Input on product roadmap direction",
-      "Co-marketing opportunities",
-      "Legal partner referral status",
-      "Custom integration possibilities",
-      "Private investor updates",
+      "1-year access to Parental Alienation Analyzer",
+      "Early Adopter credit",
+      "Community access",
+      "Educational resources",
+      "One-time payment",
     ],
-    cta: "Become a Partner",
+    cta: "Get Early Access",
+    ctaVariant: "default" as const,
+    highlight: true,
+    isPresale: true,
+  },
+  {
+    id: "parent_single_case",
+    name: "⚖️ Parent Single-Case License",
+    price: 165,
+    badge: "~50% Off",
+    badgeVariant: "secondary" as const,
+    icon: FileText,
+    iconColor: "text-emerald-600",
+    bestFor: "3-month Litigation Engine access",
+    seats: "250 seats",
+    features: [
+      "3-month Litigation Engine access",
+      "90-day Analyzer Pro included",
+      "Renew at 50% off ($82.50/3 mo)",
+      "Full feature access",
+      "Email support",
+    ],
+    cta: "Start Your Case",
+    ctaVariant: "default" as const,
+    isPresale: true,
+    renewal: "Renewable at 50% off ($82.50/3 mo)",
+  },
+  {
+    id: "parent_multi_case",
+    name: "🛡️ Parent Multi-Case License",
+    price: 290,
+    badge: "~50% Off",
+    badgeVariant: "secondary" as const,
+    icon: Shield,
+    iconColor: "text-amber-600",
+    bestFor: "6-month Litigation Engine access",
+    seats: "100 seats",
+    features: [
+      "6-month Litigation Engine access",
+      "180-day Analyzer Pro included",
+      "Renew at 50% off ($145/6 mo)",
+      "Priority support",
+      "Advanced features",
+    ],
+    cta: "Secure Multi-Case",
     ctaVariant: "secondary" as const,
-    premium: true,
+    isPresale: true,
+    renewal: "Renewable at 50% off ($145/6 mo)",
+  },
+  {
+    id: "small_firm_monthly",
+    name: "⚔️ Small Firm Monthly Founders",
+    price: 249,
+    badge: "Locked Rate Forever",
+    badgeVariant: "secondary" as const,
+    icon: Crown,
+    iconColor: "text-rose-600",
+    bestFor: "≤100 cases/yr - monthly access",
+    seats: "25 seats",
+    features: [
+      "Monthly access to both apps",
+      "50% off forever - locked rate",
+      "≤100 cases per year",
+      "Priority onboarding",
+      "Founder listing recognition",
+    ],
+    cta: "Lock Your Rate",
+    ctaVariant: "secondary" as const,
+    isPresale: true,
+    recurring: "per month (locked rate)",
+  },
+  {
+    id: "small_firm_annual",
+    name: "🏛️ Small Firm Annual Founders",
+    price: 1999,
+    badge: "Best Value",
+    badgeVariant: "default" as const,
+    icon: Star,
+    iconColor: "text-indigo-600",
+    bestFor: "1-year Engine (≤100 cases)",
+    seats: "25 seats",
+    features: [
+      "1-year full Engine access",
+      "Analyzer Enterprise tools included",
+      "≤100 cases per year",
+      "Renew at 50% off ($999.50/yr)",
+      "Lifetime locked-rate listing",
+    ],
+    cta: "Secure Annual Access",
+    ctaVariant: "default" as const,
+    isPresale: true,
+    renewal: "Renewable at 50% off ($999.50/yr)",
   },
 ];
 
-const FEATURE_COMPARISON = [
-  { name: "Founding Wall Recognition", tiers: [true, true, true, true, true] },
-  { name: "Community Updates", tiers: [true, true, true, true, true] },
-  { name: "Educational Resources", tiers: [true, true, true, true, true] },
-  { name: "Early Platform Access", tiers: [false, true, true, true, true] },
-  { name: "Premium Features Duration", tiers: ["N/A", "3 months", "12 months", "Lifetime", "Lifetime"] },
-  { name: "IRAC Document Generation", tiers: [false, true, true, true, true] },
-  { name: "Email Support", tiers: [false, true, true, true, true] },
-  { name: "Priority Support", tiers: [false, false, true, true, true] },
-  { name: "DARVO Pattern Detection", tiers: [false, false, true, true, true] },
-  { name: "Multi-Layer Chronology", tiers: [false, false, true, true, true] },
-  { name: "Founder Q&A Sessions", tiers: [false, false, true, true, true] },
-  { name: "Success Stories Feature", tiers: [false, false, false, true, true] },
-  { name: "Private AMA Access", tiers: [false, false, false, true, true] },
-  { name: "Damage Calculation Tools", tiers: [false, false, false, true, true] },
-  { name: "Federal Filing Templates", tiers: [false, false, false, true, true] },
-  { name: "White-Glove Onboarding", tiers: [false, false, false, true, true] },
-  { name: "Equity/Revenue Share", tiers: [false, false, false, false, true] },
-  { name: "Strategy Calls", tiers: [false, false, false, false, true] },
-  { name: "Roadmap Input", tiers: [false, false, false, false, true] },
-  { name: "Co-Marketing", tiers: [false, false, false, false, true] },
+// POST-LAUNCH STANDARD PRICING
+const STANDARD_PRICING = [
+  {
+    id: "analyzer_pro",
+    name: "Analyzer Pro",
+    price: 19.99,
+    badge: "For Parents",
+    badgeVariant: "default" as const,
+    icon: Brain,
+    iconColor: "text-blue-600",
+    bestFor: "Monthly subscription",
+    features: [
+      "Monthly Parental Alienation Analyzer access",
+      "Pattern detection & analysis",
+      "Document organization",
+      "Basic IRAC templates",
+      "Email support",
+    ],
+    cta: "Start Monthly",
+    ctaVariant: "default" as const,
+    recurring: "per month",
+  },
+  {
+    id: "single_case_license",
+    name: "Single-Case License",
+    price: 329,
+    badge: "For Parents",
+    badgeVariant: "secondary" as const,
+    icon: FileText,
+    iconColor: "text-emerald-600",
+    bestFor: "3-month litigation access",
+    features: [
+      "3-month Litigation Engine access",
+      "Full feature suite",
+      "Priority email support",
+      "Renew at 50% off ($164.50/3 mo)",
+      "One-time purchase",
+    ],
+    cta: "Get 3 Months",
+    ctaVariant: "default" as const,
+    renewal: "Renewable at 50% off",
+  },
+  {
+    id: "multi_case_license",
+    name: "Multi-Case License",
+    price: 579,
+    badge: "For Parents",
+    badgeVariant: "secondary" as const,
+    icon: Shield,
+    iconColor: "text-amber-600",
+    bestFor: "6-month litigation access",
+    features: [
+      "6-month Litigation Engine access",
+      "Advanced chronology tools",
+      "Priority support",
+      "Renew at 50% off ($289.50/6 mo)",
+      "One-time purchase",
+    ],
+    cta: "Get 6 Months",
+    ctaVariant: "secondary" as const,
+    highlight: true,
+    renewal: "Renewable at 50% off",
+  },
+  {
+    id: "ethical_firm",
+    name: "Ethical Firm License",
+    price: 499,
+    badge: "For Law Firms",
+    badgeVariant: "secondary" as const,
+    icon: Award,
+    iconColor: "text-purple-600",
+    bestFor: "≤100 cases/yr",
+    features: [
+      "Monthly recurring access",
+      "Up to 100 cases per year",
+      "Full platform access",
+      "Priority support",
+      "Multi-user access",
+    ],
+    cta: "Start Firm Access",
+    ctaVariant: "default" as const,
+    recurring: "per month",
+  },
+  {
+    id: "major_firm",
+    name: "Major Firm License",
+    price: 4999,
+    badge: "For Large Firms",
+    badgeVariant: "secondary" as const,
+    icon: Crown,
+    iconColor: "text-rose-600",
+    bestFor: "≤5,000 cases/yr",
+    features: [
+      "Monthly recurring access",
+      "Up to 5,000 cases per year",
+      "Enterprise features",
+      "Dedicated support",
+      "Custom integrations available",
+    ],
+    cta: "Enterprise Access",
+    ctaVariant: "secondary" as const,
+    recurring: "per month",
+  },
+  {
+    id: "dss_govt",
+    name: "DSS / Gov't License",
+    price: 29999,
+    badge: "Contract Only",
+    badgeVariant: "secondary" as const,
+    icon: Star,
+    iconColor: "text-slate-600",
+    bestFor: "≥11,000 cases/yr",
+    features: [
+      "$29,999/month + $10,000 Fairness Surcharge",
+      "Government & Title IV-D agencies",
+      "11,000+ cases per year",
+      "Custom contract terms",
+      "White-glove implementation",
+    ],
+    cta: "Contact for Contract",
+    ctaVariant: "secondary" as const,
+    premium: true,
+    recurring: "per month + surcharge",
+  },
 ];
+
+// Use presale pricing for 7-day window, standard pricing after
+const ACTIVE_PRICING = PRESALE_TIERS; // Change to STANDARD_PRICING after presale ends
 
 const Index = () => {
   const { toast } = useToast();
@@ -202,9 +333,10 @@ const Index = () => {
     setSelectedTier(tierId);
 
     try {
-      const tier = PRICING_TIERS.find((t) => t.id === tierId);
+      const tier = ACTIVE_PRICING.find((t) => t.id === tierId);
       
-      if (tier?.isFree) {
+      // All presale tiers are paid via Stripe
+      if (false) {
         // Handle free supporter tier
         const { error } = await supabase.functions.invoke("join-waitlist", {
           body: { 
@@ -394,14 +526,20 @@ const Index = () => {
                 </div>
               </div>
 
-              {/* Pricing Cards */}
-              <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6 max-w-7xl mx-auto mb-16">
-                {PRICING_TIERS.map((tier) => {
+              {/* Presale Pricing Cards */}
+              <div className="mb-12">
+                <div className="bg-gradient-to-r from-rose-500/10 to-amber-500/10 border border-rose-500/20 rounded-lg p-6 mb-8 text-center">
+                  <h3 className="font-sora font-bold text-2xl mb-2">🚀 7-Day "Founders Drop" — TikTok-Exclusive</h3>
+                  <p className="font-inter text-muted-foreground">Available for 7 days only • Never offered again • DSS/Gov't excluded</p>
+                </div>
+                
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto mb-16">
+                  {ACTIVE_PRICING.map((tier) => {
                   const Icon = tier.icon;
                   return (
                     <Card 
                       key={tier.id} 
-                      className={`relative ${tier.highlight ? "border-primary shadow-lg scale-105" : ""} ${tier.premium ? "bg-gradient-to-br from-card to-muted" : ""}`}
+                      className={`relative ${tier.highlight ? "border-primary shadow-lg scale-105" : ""}`}
                     >
                       {tier.highlight && (
                         <div className="absolute -top-3 left-1/2 -translate-x-1/2">
@@ -417,13 +555,20 @@ const Index = () => {
                         <div className={`w-12 h-12 mx-auto mb-3 rounded-full bg-primary/10 flex items-center justify-center`}>
                           <Icon className={`w-6 h-6 ${tier.iconColor}`} />
                         </div>
-                        <CardTitle className="font-sora">{tier.name}</CardTitle>
+                        <CardTitle className="font-sora text-base">{tier.name}</CardTitle>
                         <div className="font-sora text-3xl font-bold text-primary">
                           ${tier.price}
+                          {tier.recurring && <span className="text-sm font-normal text-muted-foreground block">{tier.recurring}</span>}
                         </div>
                         <CardDescription className="font-inter text-sm">
                           {tier.bestFor}
                         </CardDescription>
+                        {tier.seats && (
+                          <Badge variant="outline" className="mt-2">{tier.seats}</Badge>
+                        )}
+                        {tier.renewal && (
+                          <p className="text-xs text-primary mt-2 font-semibold">{tier.renewal}</p>
+                        )}
                       </CardHeader>
                       <CardContent>
                         <ul className="space-y-2">
@@ -454,46 +599,70 @@ const Index = () => {
                     </Card>
                   );
                 })}
+                </div>
               </div>
 
-              {/* Feature Comparison Table */}
-              <div className="max-w-6xl mx-auto">
-                <h3 className="font-sora font-bold text-2xl text-center mb-8">
-                  Feature Comparison
-                </h3>
-                <div className="overflow-x-auto">
-                  <table className="w-full border border-border rounded-lg">
-                    <thead>
-                      <tr className="bg-muted">
-                        <th className="p-4 text-left font-sora font-semibold">Feature</th>
-                        {PRICING_TIERS.map((tier) => (
-                          <th key={tier.id} className="p-4 text-center font-sora font-semibold">
-                            {tier.name}
-                          </th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {FEATURE_COMPARISON.map((feature, idx) => (
-                        <tr key={idx} className="border-t border-border">
-                          <td className="p-4 font-inter text-sm">{feature.name}</td>
-                          {feature.tiers.map((value, tierIdx) => (
-                            <td key={tierIdx} className="p-4 text-center">
-                              {typeof value === "boolean" ? (
-                                value ? (
-                                  <Check className="w-5 h-5 text-primary mx-auto" />
-                                ) : (
-                                  <X className="w-5 h-5 text-muted-foreground mx-auto" />
-                                )
-                              ) : (
-                                <span className="font-inter text-sm">{value}</span>
-                              )}
-                            </td>
-                          ))}
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+              {/* Post-Launch Standard Pricing Preview */}
+              <div className="mt-20 pt-12 border-t border-border">
+                <div className="text-center mb-12">
+                  <Badge variant="outline" className="mb-4">After Founders Week</Badge>
+                  <h3 className="font-sora font-bold text-3xl mb-4">Post-Launch Standard Pricing</h3>
+                  <p className="font-inter text-muted-foreground max-w-2xl mx-auto">
+                    After the 7-day presale ends, these will be the regular pricing tiers with renewable discounts for extended access.
+                  </p>
+                </div>
+
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                  {STANDARD_PRICING.map((tier) => {
+                    const Icon = tier.icon;
+                    return (
+                      <Card 
+                        key={tier.id} 
+                        className={`relative opacity-75 ${tier.highlight ? "border-primary" : ""}`}
+                      >
+                        {tier.badge && (
+                          <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                            <Badge variant={tier.badgeVariant}>{tier.badge}</Badge>
+                          </div>
+                        )}
+                        <CardHeader className="text-center pt-8">
+                          <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-primary/10 flex items-center justify-center">
+                            <Icon className={`w-6 h-6 ${tier.iconColor}`} />
+                          </div>
+                          <CardTitle className="font-sora text-base">{tier.name}</CardTitle>
+                          <div className="font-sora text-2xl font-bold text-primary">
+                            ${tier.price}
+                            {tier.recurring && <span className="text-sm font-normal text-muted-foreground block">{tier.recurring}</span>}
+                          </div>
+                          <CardDescription className="font-inter text-sm">
+                            {tier.bestFor}
+                          </CardDescription>
+                          {tier.renewal && (
+                            <p className="text-xs text-primary mt-2 font-semibold">{tier.renewal}</p>
+                          )}
+                        </CardHeader>
+                        <CardContent>
+                          <ul className="space-y-2">
+                            {tier.features.map((feature, idx) => (
+                              <li key={idx} className="flex items-start gap-2 text-sm font-inter">
+                                <Check className="w-4 h-4 text-primary mt-0.5 shrink-0" />
+                                <span>{feature}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </CardContent>
+                        <CardFooter>
+                          <Button 
+                            variant="outline"
+                            className="w-full font-inter"
+                            disabled
+                          >
+                            Available After Presale
+                          </Button>
+                        </CardFooter>
+                      </Card>
+                    );
+                  })}
                 </div>
               </div>
             </div>
