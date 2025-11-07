@@ -823,11 +823,64 @@ const Index = () => {
           </section>
         </main>
 
-        <footer className="py-8 border-t border-border">
-          <div className="container mx-auto px-4 text-center">
-            <p className="font-inter text-sm text-muted-foreground">
-              © 2025 4D LegalTech AI. Built by parents, for parents.
-            </p>
+        <footer className="py-12 border-t border-border bg-muted/30">
+          <div className="container mx-auto px-4">
+            <div className="max-w-5xl mx-auto space-y-8">
+              {/* Legal & Compliance Notice */}
+              <div className="space-y-3">
+                <h3 className="font-sora font-bold text-lg text-foreground">Legal & Compliance Notice</h3>
+                <p className="font-inter text-sm text-muted-foreground leading-relaxed">
+                  4D LegalTech AI and the Parental Alienation Analyzer provide software that helps users organize evidence and generate draft documents. We are not a law firm, we do not offer legal advice, and use of our products does not create an attorney-client relationship. Always consult a licensed attorney about your case. Outputs may require attorney review and local-court formatting before filing.
+                </p>
+              </div>
+
+              {/* No Individual Accusations */}
+              <div className="space-y-3">
+                <h3 className="font-sora font-bold text-lg text-foreground">No Individual Accusations</h3>
+                <p className="font-inter text-sm text-muted-foreground leading-relaxed">
+                  Our content focuses on systemic problems (policy, process, and incentives). We do not publish allegations about specific people or cases on this site.
+                </p>
+              </div>
+
+              {/* Data & Privacy */}
+              <div className="space-y-3">
+                <h3 className="font-sora font-bold text-lg text-foreground">Data & Privacy</h3>
+                <p className="font-inter text-sm text-muted-foreground leading-relaxed">
+                  You are responsible for uploading only information you have a right to share. Do not upload medical, school, or child data unless you have lawful authority. We provide tools for redaction, audit logs, and chain-of-custody export; however, you remain the data controller.
+                </p>
+              </div>
+
+              {/* Presale Terms */}
+              <div className="space-y-3">
+                <h3 className="font-sora font-bold text-lg text-foreground">Presale Terms</h3>
+                <p className="font-inter text-sm text-muted-foreground leading-relaxed">
+                  Presale access provides early software access, roadmap updates, and founding-member perks. Features may change; refunds are limited to the terms stated at checkout. Presale is not an investment and conveys no equity.
+                </p>
+              </div>
+
+              {/* Forward-Looking Statements */}
+              <div className="space-y-3">
+                <h3 className="font-sora font-bold text-lg text-foreground">Forward-Looking Statements</h3>
+                <p className="font-inter text-sm text-muted-foreground leading-relaxed">
+                  Any timelines, features, or outcomes are forward-looking and subject to change. Actual results may differ.
+                </p>
+              </div>
+
+              {/* Jurisdiction & Dispute Resolution */}
+              <div className="space-y-3">
+                <h3 className="font-sora font-bold text-lg text-foreground">Jurisdiction & Dispute Resolution</h3>
+                <p className="font-inter text-sm text-muted-foreground leading-relaxed">
+                  By using this site you agree to our Terms of Use and Privacy Policy (posted at checkout). Governing law: South Carolina; binding arbitration and class-action waiver apply.
+                </p>
+              </div>
+
+              {/* Copyright */}
+              <div className="pt-8 border-t border-border text-center">
+                <p className="font-inter text-sm text-muted-foreground">
+                  © 2025 4D LegalTech AI. Built by parents, for parents.
+                </p>
+              </div>
+            </div>
           </div>
         </footer>
       </div>
