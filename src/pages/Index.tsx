@@ -9,7 +9,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Shield, FileText, Brain, Calendar, Check, X, Award, Zap, Crown, Gem, Star } from "lucide-react";
 import { z } from "zod";
 import logo from "@/assets/logo.png";
-import backdrop from "@/assets/backdrop.png";
+import backdrop from "@/assets/backdrop-final.png";
 import { SupportChatbot } from "@/components/SupportChatbot";
 import { supabase } from "@/integrations/supabase/client";
 
