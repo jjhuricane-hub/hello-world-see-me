@@ -413,50 +413,37 @@ const Index = () => {
 
         <main className="pt-16">
           {/* Hero Section */}
-          <section className="relative py-20 md:py-32 overflow-hidden">
+          <section className="py-20 md:py-32 bg-muted/50">
             <div className="container mx-auto px-4">
               <div className="max-w-4xl mx-auto text-center">
-                <img src={logo} alt="4D LegalTech AI" className="w-32 h-32 mx-auto mb-8 object-contain" />
-
-                <h1 className="font-sora font-bold text-4xl md:text-6xl mb-6 text-foreground">
-                  Choose Your Justice Plan
-                </h1>
-                
-                <p className="font-sora text-2xl md:text-3xl font-bold text-primary mb-4 tracking-tight">
-                  AI-Powered Legal Support for Family Court Cases
+                <h2 className="font-sora font-bold text-3xl md:text-4xl mb-6">
+                  Join Thousands Fighting Family Court Corruption
+                </h2>
+                <p className="font-inter text-xl text-muted-foreground mb-8">
+                  Built from real federal case experience. Turning documentation into justice since 2025.
                 </p>
                 
-                <p className="font-inter text-xl md:text-2xl text-muted-foreground mb-8">
-                  Transform your evidence into court-ready federal filings with the world's first automated legal platform designed by a parent who lived it.
-                </p>
+                <blockquote className="bg-card border border-border rounded-lg p-8 mb-8">
+                  <h3 className="font-sora text-2xl font-bold mb-4 text-primary">
+                    The Problem
+                  </h3>
+                  <p className="font-inter text-lg text-muted-foreground text-left">
+                    Family-court cases are evidence-heavy and procedurally complex. Parents and small firms face fragmented records, opaque processes, and manipulation patterns (e.g., parental-alienation behaviors and DARVO) that are difficult to prove without structured analysis. Existing tools don't take users from raw evidence to judge-readable, admissible filings that bridge state family law and federal civil-rights remedies.
+                  </p>
+                </blockquote>
 
-                <div className="bg-card border border-border rounded-lg p-6 mb-8 text-left">
-                  <p className="font-inter text-muted-foreground mb-4">
-                    Built by a parent whose love for his son ran wider than every lie, deeper than every court file, and stronger than any judge's pen. Through prayer, perseverance, and divine guidance, 4D LegalTech AI was born—proof that faith can forge justice, love can outlast lies, and NO earthly system can rewrite what GOD has already redeemed.
-                  </p>
-                  <p className="font-inter text-foreground font-semibold">
-                    No legal background required.
-                  </p>
-                </div>
-
-                {/* Countdown Timer */}
-                <div className="bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20 rounded-lg p-6 mb-8">
-                  <p className="font-sora font-semibold text-sm uppercase tracking-wide mb-3 text-primary">
-                    ⚡ Pre-Launch Pricing Available Until:
-                  </p>
-                  <div className="flex justify-center gap-4">
-                    <div className="text-center">
-                      <div className="font-sora text-3xl font-bold text-foreground">{countdown.days}</div>
-                      <div className="font-inter text-xs text-muted-foreground uppercase">Days</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="font-sora text-3xl font-bold text-foreground">{countdown.hours}</div>
-                      <div className="font-inter text-xs text-muted-foreground uppercase">Hours</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="font-sora text-3xl font-bold text-foreground">{countdown.minutes}</div>
-                      <div className="font-inter text-xs text-muted-foreground uppercase">Minutes</div>
-                    </div>
+                <div className="grid md:grid-cols-3 gap-6">
+                  <div className="bg-card border border-border rounded-lg p-6">
+                    <div className="font-sora text-2xl font-bold text-primary mb-2">Used by</div>
+                    <div className="font-inter text-muted-foreground">Legal professionals and self-represented litigants</div>
+                  </div>
+                  <div className="bg-card border border-border rounded-lg p-6">
+                    <div className="font-sora text-2xl font-bold text-primary mb-2">Built from</div>
+                    <div className="font-inter text-muted-foreground">12+ years of family court documentation</div>
+                  </div>
+                  <div className="bg-card border border-border rounded-lg p-6">
+                    <Shield className="w-8 h-8 text-primary mx-auto mb-2" />
+                    <div className="font-inter text-muted-foreground">30-Day Money-Back Guarantee</div>
                   </div>
                 </div>
               </div>
@@ -668,38 +655,51 @@ const Index = () => {
             </div>
           </section>
 
-          {/* Social Proof */}
-          <section className="py-20 md:py-32 bg-muted/50">
+          {/* Choose Your Plan Section */}
+          <section className="relative py-20 md:py-32 overflow-hidden">
             <div className="container mx-auto px-4">
               <div className="max-w-4xl mx-auto text-center">
-                <h2 className="font-sora font-bold text-3xl md:text-4xl mb-6">
-                  Join Thousands Fighting Family Court Corruption
-                </h2>
-                <p className="font-inter text-xl text-muted-foreground mb-8">
-                  Built from real federal case experience. Turning documentation into justice since 2025.
+                <img src={logo} alt="4D LegalTech AI" className="w-32 h-32 mx-auto mb-8 object-contain" />
+
+                <h1 className="font-sora font-bold text-4xl md:text-6xl mb-6 text-foreground">
+                  Choose Your Justice Plan
+                </h1>
+                
+                <p className="font-sora text-2xl md:text-3xl font-bold text-primary mb-4 tracking-tight">
+                  AI-Powered Legal Support for Family Court Cases
                 </p>
                 
-                <blockquote className="bg-card border border-border rounded-lg p-8 mb-8">
-                  <h3 className="font-sora text-2xl font-bold mb-4 text-primary">
-                    The Problem
-                  </h3>
-                  <p className="font-inter text-lg text-muted-foreground text-left">
-                    Family-court cases are evidence-heavy and procedurally complex. Parents and small firms face fragmented records, opaque processes, and manipulation patterns (e.g., parental-alienation behaviors and DARVO) that are difficult to prove without structured analysis. Existing tools don't take users from raw evidence to judge-readable, admissible filings that bridge state family law and federal civil-rights remedies.
-                  </p>
-                </blockquote>
+                <p className="font-inter text-xl md:text-2xl text-muted-foreground mb-8">
+                  Transform your evidence into court-ready federal filings with the world's first automated legal platform designed by a parent who lived it.
+                </p>
 
-                <div className="grid md:grid-cols-3 gap-6">
-                  <div className="bg-card border border-border rounded-lg p-6">
-                    <div className="font-sora text-2xl font-bold text-primary mb-2">Used by</div>
-                    <div className="font-inter text-muted-foreground">Legal professionals and self-represented litigants</div>
-                  </div>
-                  <div className="bg-card border border-border rounded-lg p-6">
-                    <div className="font-sora text-2xl font-bold text-primary mb-2">Built from</div>
-                    <div className="font-inter text-muted-foreground">12+ years of family court documentation</div>
-                  </div>
-                  <div className="bg-card border border-border rounded-lg p-6">
-                    <Shield className="w-8 h-8 text-primary mx-auto mb-2" />
-                    <div className="font-inter text-muted-foreground">30-Day Money-Back Guarantee</div>
+                <div className="bg-card border border-border rounded-lg p-6 mb-8 text-left">
+                  <p className="font-inter text-muted-foreground mb-4">
+                    Built by a parent whose love for his son ran wider than every lie, deeper than every court file, and stronger than any judge's pen. Through prayer, perseverance, and divine guidance, 4D LegalTech AI was born—proof that faith can forge justice, love can outlast lies, and NO earthly system can rewrite what GOD has already redeemed.
+                  </p>
+                  <p className="font-inter text-foreground font-semibold">
+                    No legal background required.
+                  </p>
+                </div>
+
+                {/* Countdown Timer */}
+                <div className="bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20 rounded-lg p-6 mb-8">
+                  <p className="font-sora font-semibold text-sm uppercase tracking-wide mb-3 text-primary">
+                    ⚡ Pre-Launch Pricing Available Until:
+                  </p>
+                  <div className="flex justify-center gap-4">
+                    <div className="text-center">
+                      <div className="font-sora text-3xl font-bold text-foreground">{countdown.days}</div>
+                      <div className="font-inter text-xs text-muted-foreground uppercase">Days</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="font-sora text-3xl font-bold text-foreground">{countdown.hours}</div>
+                      <div className="font-inter text-xs text-muted-foreground uppercase">Hours</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="font-sora text-3xl font-bold text-foreground">{countdown.minutes}</div>
+                      <div className="font-inter text-xs text-muted-foreground uppercase">Minutes</div>
+                    </div>
                   </div>
                 </div>
               </div>
