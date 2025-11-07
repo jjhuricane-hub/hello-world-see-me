@@ -680,12 +680,12 @@ const Index = () => {
                 </p>
                 
                 <blockquote className="bg-card border border-border rounded-lg p-8 mb-8">
-                  <p className="font-sora text-2xl font-semibold mb-4 italic text-foreground">
-                    "I built this because I lived it. Every feature comes from real court battles."
+                  <h3 className="font-sora text-2xl font-bold mb-4 text-primary">
+                    The Problem
+                  </h3>
+                  <p className="font-inter text-lg text-muted-foreground text-left">
+                    Family-court cases are evidence-heavy and procedurally complex. Parents and small firms face fragmented records, opaque processes, and manipulation patterns (e.g., parental-alienation behaviors and DARVO) that are difficult to prove without structured analysis. Existing tools don't take users from raw evidence to judge-readable, admissible filings that bridge state family law and federal civil-rights remedies.
                   </p>
-                  <footer className="font-inter text-muted-foreground">
-                    <strong className="text-primary">Jason Lynn Peppard</strong>, Founder
-                  </footer>
                 </blockquote>
 
                 <div className="grid md:grid-cols-3 gap-6">
