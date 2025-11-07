@@ -393,6 +393,18 @@ const Index = () => {
           backgroundRepeat: "no-repeat",
         }}
       />
+
+      {/* Text Overlay at Tree Base */}
+      <div className="fixed bottom-[15%] left-1/2 -translate-x-1/2 z-[5] pointer-events-none">
+        <h1 
+          className="font-sora font-bold text-3xl md:text-5xl text-primary"
+          style={{
+            textShadow: '0 0 20px hsl(var(--primary) / 0.5), 0 0 40px hsl(var(--primary) / 0.3)',
+          }}
+        >
+          4D LegalTech AI
+        </h1>
+      </div>
       
       <div className="relative z-10">
         {/* Header */}
