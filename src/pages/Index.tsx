@@ -6,7 +6,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Shield, FileText, Brain, Calendar, Check, X, Award, Zap, Crown, Gem, Star } from "lucide-react";
+import { Shield, FileText, Brain, Calendar, Check, X, Award, Zap, Crown, Gem, Star, ArrowDown, CheckCircle2 } from "lucide-react";
 import { z } from "zod";
 import logo from "@/assets/logo.png";
 import backdrop from "@/assets/backdrop-final.png";
@@ -288,6 +288,8 @@ const Index = () => {
   const [selectedTier, setSelectedTier] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0 });
+  const [validationErrors, setValidationErrors] = useState({ name: "", email: "" });
+  const [isFormValid, setIsFormValid] = useState(false);
 
   // Countdown timer (set to 30 days from now for demo)
   useEffect(() => {
@@ -307,6 +309,50 @@ const Index = () => {
 
     return () => clearInterval(interval);
   }, []);
+
+  // Validate form whenever formData changes
+  useEffect(() => {
+    const validation = emailSchema.safeParse(formData);
+    setIsFormValid(validation.success);
+    
+    if (formData.name || formData.email) {
+      if (!validation.success) {
+        const errors = { name: "", email: "" };
+        validation.error.errors.forEach((error) => {
+          if (error.path[0] === "name") errors.name = error.message;
+          if (error.path[0] === "email") errors.email = error.message;
+        });
+        setValidationErrors(errors);
+      } else {
+        setValidationErrors({ name: "", email: "" });
+      }
+    }
+  }, [formData]);
+
+  const scrollToPricing = () => {
+    const validation = emailSchema.safeParse(formData);
+    
+    if (!validation.success) {
+      toast({
+        title: "Please complete your information",
+        description: validation.error.errors[0].message,
+        variant: "destructive",
+      });
+      return;
+    }
+
+    document.getElementById("pricing-cards")?.scrollIntoView({ behavior: "smooth" });
+    toast({
+      title: "Great! Now choose your plan below",
+      description: "Select the tier that works best for you",
+    });
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      scrollToPricing();
+    }
+  };
 
   const handleTierSelect = async (tierId: string) => {
     if (!formData.email || !formData.name) {
@@ -497,36 +543,75 @@ const Index = () => {
               </p>
 
               {/* Name and Email Form */}
-              <div className="max-w-md mx-auto mb-12 bg-card border border-border rounded-lg p-6">
-                <h3 className="font-sora font-semibold text-lg mb-4">Enter Your Information</h3>
+              <div className="max-w-md mx-auto mb-12 bg-card border border-border rounded-lg p-6 shadow-lg">
+                <div className="flex items-center gap-2 mb-4">
+                  <Badge variant="secondary">Step 1</Badge>
+                  <h3 className="font-sora font-semibold text-lg">Enter Your Information</h3>
+                </div>
                 <div className="space-y-4">
                   <div>
                     <Label htmlFor="name">Full Name</Label>
-                    <Input
-                      id="name"
-                      type="text"
-                      placeholder="John Doe"
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      required
-                    />
+                    <div className="relative">
+                      <Input
+                        id="name"
+                        type="text"
+                        placeholder="John Doe"
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        onKeyPress={handleKeyPress}
+                        className={validationErrors.name && formData.name ? "border-destructive" : ""}
+                        required
+                      />
+                      {formData.name && !validationErrors.name && (
+                        <CheckCircle2 className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-green-500" />
+                      )}
+                    </div>
+                    {validationErrors.name && formData.name && (
+                      <p className="text-sm text-destructive mt-1">{validationErrors.name}</p>
+                    )}
                   </div>
                   <div>
                     <Label htmlFor="email">Email Address</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="john@example.com"
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      required
-                    />
+                    <div className="relative">
+                      <Input
+                        id="email"
+                        type="email"
+                        placeholder="john@example.com"
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        onKeyPress={handleKeyPress}
+                        className={validationErrors.email && formData.email ? "border-destructive" : ""}
+                        required
+                      />
+                      {formData.email && !validationErrors.email && (
+                        <CheckCircle2 className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-green-500" />
+                      )}
+                    </div>
+                    {validationErrors.email && formData.email && (
+                      <p className="text-sm text-destructive mt-1">{validationErrors.email}</p>
+                    )}
                   </div>
+                  <Button 
+                    onClick={scrollToPricing}
+                    disabled={!isFormValid}
+                    className="w-full mt-6"
+                    size="lg"
+                  >
+                    Continue to Plans
+                    <ArrowDown className="ml-2 w-4 h-4" />
+                  </Button>
+                  <p className="text-xs text-center text-muted-foreground mt-2">
+                    Press Enter or click Continue to view pricing options
+                  </p>
                 </div>
               </div>
 
               {/* Presale Pricing Cards */}
-              <div className="mb-12">
+              <div id="pricing-cards" className="mb-12">
+                <div className="flex items-center justify-center gap-2 mb-8">
+                  <Badge>Step 2</Badge>
+                  <h3 className="font-sora font-bold text-2xl">Choose Your Plan</h3>
+                </div>
                 <div className="bg-gradient-to-r from-rose-500/10 to-amber-500/10 border border-rose-500/20 rounded-lg p-6 mb-8 text-center">
                   <h3 className="font-sora font-bold text-2xl mb-2">🚀 7-Day "Founders Drop" — TikTok-Exclusive</h3>
                   <p className="font-inter text-muted-foreground">Available for 7 days only • Never offered again • DSS/Gov't excluded</p>
