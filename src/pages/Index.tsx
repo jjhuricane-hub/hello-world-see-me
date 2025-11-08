@@ -485,8 +485,14 @@ const Index = () => {
                   <h3 className="font-sora text-2xl font-bold mb-4 text-primary">
                     The Problem
                   </h3>
-                  <p className="font-inter text-lg text-muted-foreground text-left">
+                  <p className="font-inter text-lg text-muted-foreground text-left mb-6">
                     Family-court cases are evidence-heavy and procedurally complex. Parents and small firms face fragmented records, opaque processes, and manipulation patterns (e.g., parental-alienation behaviors and DARVO) that are difficult to prove without structured analysis. Existing tools don't take users from raw evidence to judge-readable, admissible filings that bridge state family law and federal civil-rights remedies.
+                  </p>
+                  <h4 className="font-sora text-xl font-bold mb-3 text-primary">
+                    SOLUTION:
+                  </h4>
+                  <p className="font-inter text-lg text-muted-foreground text-left">
+                    4D LegalTech AI is an end-to-end litigation engine that ingests raw evidence, auto-builds a verified chronology, detects alienation/DARVO and systemic fraud, produces IRAC/DARVO legal analyses (with linked exhibits), scaffolds state and federal remedies, calculates damages, and exports litigation-grade, print-ready PDF binders with immutable audit trails.
                   </p>
                 </blockquote>
 
