@@ -1,31 +1,82 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>4D LegalTech AI — Truth-centered AI for Family Law</title>
-    <meta name="description" content="Join the early-access waitlist for 4D LegalTech AI. Explainable evidence intelligence, timelines, and insights to support family-law outcomes." />
-    <meta name="author" content="4D LegalTech AI" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MVP Landing — Demo</title>
+  <style>
+    :root{--accent:#0077ff;--bg:#f6f8fb;--card:#fff}
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;margin:0;background:var(--bg);color:#111}
+    header{background:linear-gradient(90deg,#ffffffcc, #f0f6ff);padding:28px 20px;border-bottom:1px solid #e6ecf8}
+    .container{max-width:980px;margin:0 auto}
+    .hero{display:flex;gap:24px;align-items:center;justify-content:space-between;padding:40px 0}
+    .hero-left h1{margin:0 0 8px;font-size:28px}
+    .hero-left p{margin:0 0 18px;color:#334155}
+    .btn{display:inline-block;padding:12px 18px;border-radius:8px;background:var(--accent);color:#fff;text-decoration:none;font-weight:600}
+    .btn-secondary{background:#e6eefc;color:var(--accent);border:1px solid #cfe3ff}
+    .demo-link{margin-left:12px}
+    .buttons{display:flex;gap:12px;flex-wrap:wrap}
+    footer{padding:28px 0;color:#6b7280;font-size:14px;text-align:center}
+    .card{background:var(--card);padding:18px;border-radius:12px;box-shadow:0 6px 18px rgba(16,24,40,0.06)}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div><strong>My Product</strong></div>
+        <nav>
+          <a href="demo.html" class="btn btn-secondary demo-link">Try the demo</a>
+        </nav>
+      </div>
+    </div>
+  </header>
 
-    <meta property="og:title" content="4D LegalTech AI — Truth-centered AI for Family Law" />
-    <meta property="og:description" content="Join the early-access waitlist for 4D LegalTech AI. Explainable evidence intelligence, timelines, and insights to support family-law outcomes." />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="/og-image.png" />
+  <main class="container">
+    <section class="hero" id="hero">
+      <div class="hero-left">
+        <h1>Single-page MVP Landing</h1>
+        <p>A simple working demo. Click the demo tab to try the product interaction.</p>
+        <div class="buttons">
+          <!-- Replaced donate button with presale button -->
+          <a class="btn" href="#hero" id="buy-presale-1">Buy your presale seat — Lock in your lifetime price and deals</a>
+          <a class="btn btn-secondary" href="#hero" id="buy-presale-2">Buy your presale seat — Lock in your lifetime price and deals</a>
+        </div>
+      </div>
+      <div style="width:320px">
+        <div class="card">
+          <p style="margin:0 0 12px"><strong>Presale details</strong></p>
+          <p style="margin:0 0 12px;color:#475569">Lifetime price, limited seats. Clicking Buy will return you to this page. Configure link later to your checkout.</p>
+          <a class="btn" href="#hero">Buy your presale seat</a>
+        </div>
+      </div>
+    </section>
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="4D LegalTech AI — Truth-centered AI for Family Law" />
-    <meta name="twitter:description" content="Explainable evidence intelligence for family law outcomes" />
-    <meta name="twitter:image" content="/og-image.png" />
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  </head>
+    <section style="padding:20px 0">
+      <div class="card">
+        <h3 style="margin-top:0">About</h3>
+        <p style="margin:0">This is a demonstration of replacing donate buttons with presale CTAs and adding a demo page. I can hook these buttons to a checkout or make them open a modal/checkout flow as required.</p>
+      </div>
+    </section>
+  </main>
 
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+  <footer>
+    <div class="container">© 2025 My Product — MVP</div>
+  </footer>
+
+  <script>
+    // Example: make the buttons navigate to the landing's hero (already anchors).
+    // If you want to route to an external checkout, replace the hrefs with that URL.
+    document.querySelectorAll('#buy-presale-1, #buy-presale-2').forEach(btn=>{
+      btn.addEventListener('click', (e)=>{
+        // In-place behavior: scroll to hero and show a tiny confirmation
+        e.preventDefault();
+        document.getElementById('hero').scrollIntoView({behavior:'smooth'});
+        const orig = btn.textContent;
+        btn.textContent = 'Thanks — reserved!';
+        setTimeout(()=>btn.textContent = orig, 2200);
+      });
+    });
+  </script>
+</body>
 </html>
