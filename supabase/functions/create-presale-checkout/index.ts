@@ -17,10 +17,12 @@ interface CheckoutRequest {
 }
 
 const TIER_PRICES: Record<string, { amount: number; label: string }> = {
-  early_access: { amount: 5000, label: "Early Access" },
-  founders_circle: { amount: 10000, label: "Founders Circle" },
-  lifetime_founder: { amount: 25000, label: "Lifetime Founder" },
-  equity_partner: { amount: 500000, label: "Equity Partner" },
+  analyzer_lifetime_founder: { amount: 490000, label: "Analyzer - Lifetime Founder" },
+  analyzer_annual_founder: { amount: 200000, label: "Analyzer - Annual Founder" },
+  analyzer_monthly_founder: { amount: 50000, label: "Analyzer - Monthly Founder" },
+  strategist_lifetime_founder: { amount: 990000, label: "Strategist - Lifetime Founder" },
+  strategist_annual_founder: { amount: 400000, label: "Strategist - Annual Founder" },
+  strategist_monthly_founder: { amount: 100000, label: "Strategist - Monthly Founder" },
 };
 
 const handler = async (req: Request): Promise<Response> => {
