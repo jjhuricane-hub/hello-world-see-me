@@ -428,10 +428,25 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background relative">
+    <div className="min-h-screen bg-background relative overflow-hidden">
+      {/* Futuristic Grid Background */}
+      <div className="fixed inset-0 z-0 bg-gradient-to-b from-background via-background to-primary/5">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `
+            linear-gradient(rgba(0,255,255,0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0,255,255,0.03) 1px, transparent 1px)
+          `,
+          backgroundSize: '50px 50px'
+        }} />
+      </div>
+      
+      {/* Animated Glow Orbs */}
+      <div className="fixed top-20 left-20 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-glow-pulse z-0" />
+      <div className="fixed bottom-20 right-20 w-96 h-96 bg-secondary/20 rounded-full blur-3xl animate-glow-pulse z-0" style={{ animationDelay: '1s' }} />
+      
       {/* Backdrop */}
       <div 
-        className="fixed inset-0 z-0 opacity-20"
+        className="fixed inset-0 z-0 opacity-10 mix-blend-overlay"
         style={{
           backgroundImage: `url(${backdrop})`,
           backgroundSize: "cover",
@@ -443,9 +458,9 @@ const Index = () => {
       {/* Text Overlay at Tree Base */}
       <div className="fixed bottom-[15%] left-1/2 -translate-x-1/2 z-[5] pointer-events-none">
         <h1 
-          className="font-sora font-bold text-3xl md:text-5xl text-primary"
+          className="font-orbitron font-bold text-3xl md:text-5xl text-primary animate-neon-flicker"
           style={{
-            textShadow: '0 0 20px hsl(var(--primary) / 0.5), 0 0 40px hsl(var(--primary) / 0.3)',
+            textShadow: '0 0 20px hsl(var(--primary)), 0 0 40px hsl(var(--primary) / 0.5), 0 0 60px hsl(var(--primary) / 0.3)',
           }}
         >
           4D LegalTech AI
@@ -454,15 +469,15 @@ const Index = () => {
       
       <div className="relative z-10">
         {/* Header */}
-        <header className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <header className="fixed top-0 left-0 right-0 z-50 border-b border-primary/30 bg-background/95 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60 neon-border">
           <div className="container mx-auto px-4 h-16 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <img src={logo} alt="4D LegalTech AI" className="h-12 w-12 object-contain" />
-              <span className="font-sora font-semibold text-lg">4D LegalTech AI</span>
+              <img src={logo} alt="4D LegalTech AI" className="h-12 w-12 object-contain drop-shadow-[0_0_10px_rgba(0,255,255,0.5)]" />
+              <span className="font-orbitron font-bold text-lg text-primary">4D LegalTech AI</span>
             </div>
             <Button 
               onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
-              className="font-inter"
+              className="font-inter glow-cyan hover:glow-purple transition-all duration-300"
             >
               Choose Your Plan
             </Button>
@@ -471,43 +486,43 @@ const Index = () => {
 
         <main className="pt-16">
           {/* Hero Section */}
-          <section className="py-20 md:py-32 bg-muted/50">
+          <section className="py-20 md:py-32 holographic relative">
             <div className="container mx-auto px-4">
               <div className="max-w-4xl mx-auto text-center">
-                <h2 className="font-sora font-bold text-3xl md:text-4xl mb-6">
+                <h2 className="font-orbitron font-bold text-3xl md:text-4xl mb-6 text-primary animate-fade-in">
                   Join Thousands Fighting Family Court Corruption
                 </h2>
-                <p className="font-inter text-xl text-muted-foreground mb-8">
+                <p className="font-inter text-xl text-foreground/90 mb-8 animate-slide-up">
                   Built from real federal case experience. Turning documentation into justice since 2025.
                 </p>
                 
-                <blockquote className="bg-card border border-border rounded-lg p-8 mb-8">
-                  <h3 className="font-sora text-2xl font-bold mb-4 text-primary">
+                <blockquote className="bg-card/80 backdrop-blur-lg neon-border rounded-lg p-8 mb-8 animate-fade-in">
+                  <h3 className="font-orbitron text-2xl font-bold mb-4 text-primary">
                     The Problem
                   </h3>
-                  <p className="font-inter text-lg text-muted-foreground text-left mb-6">
+                  <p className="font-inter text-lg text-foreground/80 text-left mb-6">
                     Family-court cases are evidence-heavy and procedurally complex. Parents and small firms face fragmented records, opaque processes, and manipulation patterns (e.g., parental-alienation behaviors and DARVO) that are difficult to prove without structured analysis. Existing tools don't take users from raw evidence to judge-readable, admissible filings that bridge state family law and federal civil-rights remedies.
                   </p>
-                  <h4 className="font-sora text-xl font-bold mb-3 text-primary">
+                  <h4 className="font-orbitron text-xl font-bold mb-3 text-secondary">
                     The Solution
                   </h4>
-                  <p className="font-inter text-lg text-muted-foreground text-left">
+                  <p className="font-inter text-lg text-foreground/80 text-left">
                     4D LegalTech AI is an end-to-end litigation engine that ingests raw evidence, auto-builds a verified chronology, detects alienation/DARVO and systemic fraud, produces IRAC/DARVO legal analyses (with linked exhibits), scaffolds state and federal remedies, calculates damages, and exports litigation-grade, print-ready PDF binders with immutable audit trails.
                   </p>
                 </blockquote>
 
                 <div className="grid md:grid-cols-3 gap-6">
-                  <div className="bg-card border border-border rounded-lg p-6">
-                    <div className="font-sora text-2xl font-bold text-primary mb-2">Used by</div>
-                    <div className="font-inter text-muted-foreground">Legal professionals and self-represented litigants</div>
+                  <div className="bg-card/60 backdrop-blur-md border border-primary/30 rounded-lg p-6 glow-cyan hover:scale-105 transition-transform duration-300">
+                    <div className="font-orbitron text-2xl font-bold text-primary mb-2">Used by</div>
+                    <div className="font-inter text-foreground/70">Legal professionals and self-represented litigants</div>
                   </div>
-                  <div className="bg-card border border-border rounded-lg p-6">
-                    <div className="font-sora text-2xl font-bold text-primary mb-2">Built from</div>
-                    <div className="font-inter text-muted-foreground">12+ years of family court documentation</div>
+                  <div className="bg-card/60 backdrop-blur-md border border-secondary/30 rounded-lg p-6 glow-purple hover:scale-105 transition-transform duration-300">
+                    <div className="font-orbitron text-2xl font-bold text-secondary mb-2">Built from</div>
+                    <div className="font-inter text-foreground/70">12+ years of family court documentation</div>
                   </div>
-                  <div className="bg-card border border-border rounded-lg p-6">
-                    <Shield className="w-8 h-8 text-primary mx-auto mb-2" />
-                    <div className="font-inter text-muted-foreground">30-Day Money-Back Guarantee</div>
+                  <div className="bg-card/60 backdrop-blur-md border border-accent/30 rounded-lg p-6 glow-pink hover:scale-105 transition-transform duration-300">
+                    <Shield className="w-8 h-8 text-accent mx-auto mb-2 drop-shadow-[0_0_10px_rgba(255,51,204,0.5)]" />
+                    <div className="font-inter text-foreground/70">30-Day Money-Back Guarantee</div>
                   </div>
                 </div>
               </div>
@@ -515,36 +530,36 @@ const Index = () => {
           </section>
 
           {/* Trust Indicators */}
-          <section className="py-8 border-y border-border bg-card">
+          <section className="py-8 border-y border-primary/30 bg-card/40 backdrop-blur-lg">
             <div className="container mx-auto px-4">
               <div className="grid md:grid-cols-4 gap-6 max-w-4xl mx-auto text-center">
-                <div>
-                  <div className="font-sora font-bold text-2xl text-primary mb-1">12+</div>
-                  <div className="font-inter text-sm text-muted-foreground">Years Experience</div>
+                <div className="animate-fade-in">
+                  <div className="font-orbitron font-bold text-2xl text-primary mb-1">12+</div>
+                  <div className="font-inter text-sm text-foreground/60">Years Experience</div>
                 </div>
-                <div>
-                  <div className="font-sora font-bold text-2xl text-primary mb-1">Federal</div>
-                  <div className="font-inter text-sm text-muted-foreground">Court-Ready Outputs</div>
+                <div className="animate-fade-in" style={{ animationDelay: '0.1s' }}>
+                  <div className="font-orbitron font-bold text-2xl text-secondary mb-1">Federal</div>
+                  <div className="font-inter text-sm text-foreground/60">Court-Ready Outputs</div>
                 </div>
-                <div>
-                  <div className="font-sora font-bold text-2xl text-primary mb-1">IRAC</div>
-                  <div className="font-inter text-sm text-muted-foreground">Pattern Recognition</div>
+                <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
+                  <div className="font-orbitron font-bold text-2xl text-accent mb-1">IRAC</div>
+                  <div className="font-inter text-sm text-foreground/60">Pattern Recognition</div>
                 </div>
-                <div>
-                  <div className="font-sora font-bold text-2xl text-primary mb-1">Multi-Agent</div>
-                  <div className="font-inter text-sm text-muted-foreground">AI Workflow System</div>
+                <div className="animate-fade-in" style={{ animationDelay: '0.3s' }}>
+                  <div className="font-orbitron font-bold text-2xl text-primary mb-1">Multi-Agent</div>
+                  <div className="font-inter text-sm text-foreground/60">AI Workflow System</div>
                 </div>
               </div>
             </div>
           </section>
 
           {/* Pricing Section */}
-          <section id="pricing" className="py-20 md:py-32">
+          <section id="pricing" className="py-20 md:py-32 holographic">
             <div className="container mx-auto px-4">
-              <h2 className="font-sora font-bold text-3xl md:text-4xl text-center mb-4">
+              <h2 className="font-orbitron font-bold text-3xl md:text-4xl text-center mb-4 text-primary animate-fade-in">
                 Choose Your Tier
               </h2>
-              <p className="font-inter text-xl text-muted-foreground text-center mb-12 max-w-3xl mx-auto">
+              <p className="font-inter text-xl text-foreground/70 text-center mb-12 max-w-3xl mx-auto animate-slide-up">
                 Join the movement to expose family court fraud with AI-powered legal tools
               </p>
 
