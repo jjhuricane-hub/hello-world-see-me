@@ -12,6 +12,7 @@ import logo from "@/assets/logo.png";
 import backdrop from "@/assets/backdrop-final.png";
 import { SupportChatbot } from "@/components/SupportChatbot";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { AnimatedGrid } from "@/components/AnimatedGrid";
 import { supabase } from "@/integrations/supabase/client";
 
 const emailSchema = z.object({
@@ -432,13 +433,7 @@ const Index = () => {
     <div className="min-h-screen bg-background relative overflow-hidden">
       {/* Futuristic Grid Background */}
       <div className="fixed inset-0 z-0 bg-gradient-to-b from-background via-background to-primary/5">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `
-            linear-gradient(rgba(0,255,255,0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(0,255,255,0.03) 1px, transparent 1px)
-          `,
-          backgroundSize: '50px 50px'
-        }} />
+        <AnimatedGrid />
       </div>
       
       {/* Animated Glow Orbs */}
