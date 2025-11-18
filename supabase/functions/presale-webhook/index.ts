@@ -1,7 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import Stripe from "https://esm.sh/stripe@14.21.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
-import { Resend } from "npm:resend@2.0.0";
+import { Resend } from "https://esm.sh/resend@2.0.0";
 
 const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", {
   apiVersion: "2023-10-16",
@@ -167,9 +167,9 @@ const handler = async (req: Request): Promise<Response> => {
               </p>
 
               <div style="background: linear-gradient(135deg, #1E3A8A 0%, #3B82F6 100%); color: white; padding: 20px; border-radius: 8px; margin: 20px 0;">
-                <h2 style="margin-top: 0;">Your ${tier.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')} Benefits:</h2>
+                <h2 style="margin-top: 0;">Your ${tier.split('_').map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')} Benefits:</h2>
                 <ul style="line-height: 1.8;">
-                  ${template.benefits.map(b => `<li>${b}</li>`).join('')}
+                  ${template.benefits.map((b: string) => `<li>${b}</li>`).join('')}
                 </ul>
               </div>
 
