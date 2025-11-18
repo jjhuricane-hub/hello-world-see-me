@@ -447,7 +447,7 @@ const Index = () => {
       
       {/* Backdrop */}
       <div 
-        className="fixed inset-0 z-0 opacity-10 mix-blend-overlay"
+        className="fixed inset-0 z-0 opacity-40"
         style={{
           backgroundImage: `url(${backdrop})`,
           backgroundSize: "cover",
@@ -470,7 +470,7 @@ const Index = () => {
       
       <div className="relative z-10">
         {/* Header */}
-        <header className="fixed top-0 left-0 right-0 z-50 border-b border-primary/30 bg-background/95 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60 neon-border">
+        <header className="fixed top-0 left-0 right-0 z-50 border-b border-primary/30 bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/50 neon-border">
           <div className="container mx-auto px-4 h-16 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <img src={logo} alt="4D LegalTech AI" className="h-12 w-12 object-contain drop-shadow-[0_0_10px_rgba(0,255,255,0.5)]" />
@@ -490,30 +490,32 @@ const Index = () => {
 
         <main className="pt-16">
           {/* Hero Section */}
-          <section className="py-20 md:py-32 holographic relative">
+          <section className="py-20 md:py-32 relative">
             <div className="container mx-auto px-4">
               <div className="max-w-4xl mx-auto text-center">
-                <h2 className="font-orbitron font-bold text-3xl md:text-4xl mb-6 text-primary animate-fade-in">
-                  Join Thousands Fighting Family Court Corruption
+                <h1 className="font-orbitron font-bold text-4xl md:text-6xl mb-6 text-primary animate-fade-in" style={{
+                  textShadow: '0 0 20px hsl(var(--primary)), 0 0 40px hsl(var(--primary) / 0.5)'
+                }}>
+                  Choose Your Justice Plan
+                </h1>
+                <h2 className="font-orbitron font-bold text-2xl md:text-3xl mb-8 text-foreground animate-fade-in">
+                  AI-Powered Legal Support for Family Court Cases
                 </h2>
-                <p className="font-inter text-xl text-foreground/90 mb-8 animate-slide-up">
-                  Built from real federal case experience. Turning documentation into justice since 2025.
+                <p className="font-inter text-lg md:text-xl text-foreground/90 mb-8 animate-slide-up leading-relaxed">
+                  Transform your evidence into court-ready federal filings with the world's first automated legal platform designed by a parent who lived it.
                 </p>
                 
-                <blockquote className="bg-card/80 backdrop-blur-lg neon-border rounded-lg p-8 mb-8 animate-fade-in">
-                  <h3 className="font-orbitron text-2xl font-bold mb-4 text-primary">
-                    The Problem
-                  </h3>
-                  <p className="font-inter text-lg text-foreground/80 text-left mb-6">
-                    Family-court cases are evidence-heavy and procedurally complex. Parents and small firms face fragmented records, opaque processes, and manipulation patterns (e.g., parental-alienation behaviors and DARVO) that are difficult to prove without structured analysis. Existing tools don't take users from raw evidence to judge-readable, admissible filings that bridge state family law and federal civil-rights remedies.
-                  </p>
-                  <h4 className="font-orbitron text-xl font-bold mb-3 text-secondary">
-                    The Solution
-                  </h4>
-                  <p className="font-inter text-lg text-foreground/80 text-left">
-                    4D LegalTech AI is an end-to-end litigation engine that ingests raw evidence, auto-builds a verified chronology, detects alienation/DARVO and systemic fraud, produces IRAC/DARVO legal analyses (with linked exhibits), scaffolds state and federal remedies, calculates damages, and exports litigation-grade, print-ready PDF binders with immutable audit trails.
+                <blockquote className="bg-card/70 backdrop-blur-md neon-border rounded-lg p-8 mb-8 animate-fade-in">
+                  <p className="font-inter text-lg md:text-xl text-foreground/90 leading-relaxed italic">
+                    Built by a parent whose love for his son ran wider than every lie, deeper than every court file, and stronger than any judge's pen. Through prayer, perseverance, and divine guidance, 4D LegalTech AI was born—proof that faith can forge justice, love can outlast lies, and NO earthly system can rewrite what GOD has already redeemed.
                   </p>
                 </blockquote>
+                
+                <div className="inline-flex items-center justify-center bg-primary/10 border border-primary/30 rounded-lg px-6 py-3 mb-8">
+                  <p className="font-inter text-base md:text-lg text-foreground font-semibold">
+                    No legal background required.
+                  </p>
+                </div>
 
                 <div className="grid md:grid-cols-3 gap-6">
                   <div className="bg-card/60 backdrop-blur-md border border-primary/30 rounded-lg p-6 glow-cyan hover:scale-105 transition-transform duration-300">
