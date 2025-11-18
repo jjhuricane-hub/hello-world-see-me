@@ -11,6 +11,7 @@ import { z } from "zod";
 import logo from "@/assets/logo.png";
 import backdrop from "@/assets/backdrop-final.png";
 import { SupportChatbot } from "@/components/SupportChatbot";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { supabase } from "@/integrations/supabase/client";
 
 const emailSchema = z.object({
@@ -475,12 +476,15 @@ const Index = () => {
               <img src={logo} alt="4D LegalTech AI" className="h-12 w-12 object-contain drop-shadow-[0_0_10px_rgba(0,255,255,0.5)]" />
               <span className="font-orbitron font-bold text-lg text-primary">4D LegalTech AI</span>
             </div>
-            <Button 
-              onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
-              className="font-inter glow-cyan hover:glow-purple transition-all duration-300"
-            >
-              Choose Your Plan
-            </Button>
+            <div className="flex items-center gap-3">
+              <ThemeToggle />
+              <Button 
+                onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
+                className="font-inter glow-cyan hover:glow-purple transition-all duration-300"
+              >
+                Choose Your Plan
+              </Button>
+            </div>
           </div>
         </header>
 
