@@ -8,75 +8,80 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Justice Forge Brand Colors */
-    --background: 180 56% 11%;  /* Deep Teal #0E2A27 */
-    --foreground: 42 66% 88%;   /* Moon/Cream #F1E7C8 */
+    /* Futuristic Cyberpunk Theme - Dark with Neon Accents */
+    --background: 240 10% 6%;           /* Almost Black with blue tint #0F0F14 */
+    --foreground: 180 100% 95%;         /* Bright Cyan White #F0FFFF */
 
-    --card: 180 56% 15%;
-    --card-foreground: 42 66% 88%;
+    --card: 240 12% 10%;                /* Dark Blue-Grey Card #171721 */
+    --card-foreground: 180 100% 95%;
 
-    --popover: 180 56% 13%;
-    --popover-foreground: 42 66% 88%;
+    --popover: 240 15% 8%;              /* Slightly lighter than background */
+    --popover-foreground: 180 100% 95%;
 
-    --primary: 42 58% 57%;      /* Gold #D4A94E */
-    --primary-foreground: 210 41% 8%;  /* Navy #0D1B2A */
+    --primary: 180 100% 50%;            /* Electric Cyan #00FFFF */
+    --primary-foreground: 240 10% 6%;   /* Dark text on cyan */
 
-    --secondary: 174 81% 22%;   /* Accent Teal #0F6B66 */
-    --secondary-foreground: 42 66% 88%;
+    --secondary: 280 100% 65%;          /* Neon Purple/Magenta #B366FF */
+    --secondary-foreground: 240 10% 6%;
 
-    --muted: 180 56% 18%;
-    --muted-foreground: 42 40% 70%;
+    --muted: 240 10% 15%;               /* Muted dark blue */
+    --muted-foreground: 180 20% 70%;    /* Muted cyan-grey */
 
-    --accent: 174 81% 22%;      /* Accent Teal */
-    --accent-foreground: 42 66% 88%;
+    --accent: 320 100% 60%;             /* Hot Pink/Magenta #FF33CC */
+    --accent-foreground: 240 10% 6%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 42 66% 88%;
+    --destructive: 0 85% 60%;           /* Bright Red */
+    --destructive-foreground: 180 100% 95%;
 
-    --border: 180 56% 20%;
-    --input: 180 56% 18%;
-    --ring: 42 58% 57%;
+    --border: 180 50% 25%;              /* Cyan-tinted border */
+    --input: 240 12% 12%;               /* Dark input background */
+    --ring: 180 100% 50%;               /* Cyan focus ring */
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
-    --sidebar-background: 180 56% 13%;
-    --sidebar-foreground: 42 66% 88%;
-    --sidebar-primary: 42 58% 57%;
-    --sidebar-primary-foreground: 210 41% 8%;
-    --sidebar-accent: 180 56% 18%;
-    --sidebar-accent-foreground: 42 66% 88%;
-    --sidebar-border: 180 56% 20%;
-    --sidebar-ring: 42 58% 57%;
+    /* Futuristic Glow Effects */
+    --glow-cyan: 0 0 20px hsl(180 100% 50% / 0.5);
+    --glow-purple: 0 0 20px hsl(280 100% 65% / 0.5);
+    --glow-pink: 0 0 20px hsl(320 100% 60% / 0.5);
+
+    --sidebar-background: 240 12% 8%;
+    --sidebar-foreground: 180 100% 95%;
+    --sidebar-primary: 180 100% 50%;
+    --sidebar-primary-foreground: 240 10% 6%;
+    --sidebar-accent: 240 12% 15%;
+    --sidebar-accent-foreground: 180 100% 95%;
+    --sidebar-border: 180 50% 25%;
+    --sidebar-ring: 180 100% 50%;
   }
 
   .dark {
-    --background: 180 56% 11%;
-    --foreground: 42 66% 88%;
-    --card: 180 56% 15%;
-    --card-foreground: 42 66% 88%;
-    --popover: 180 56% 13%;
-    --popover-foreground: 42 66% 88%;
-    --primary: 42 58% 57%;
-    --primary-foreground: 210 41% 8%;
-    --secondary: 174 81% 22%;
-    --secondary-foreground: 42 66% 88%;
-    --muted: 180 56% 18%;
-    --muted-foreground: 42 40% 70%;
-    --accent: 174 81% 22%;
-    --accent-foreground: 42 66% 88%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 42 66% 88%;
-    --border: 180 56% 20%;
-    --input: 180 56% 18%;
-    --ring: 42 58% 57%;
-    --sidebar-background: 180 56% 13%;
-    --sidebar-foreground: 42 66% 88%;
-    --sidebar-primary: 42 58% 57%;
-    --sidebar-primary-foreground: 210 41% 8%;
-    --sidebar-accent: 180 56% 18%;
-    --sidebar-accent-foreground: 42 66% 88%;
-    --sidebar-border: 180 56% 20%;
-    --sidebar-ring: 42 58% 57%;
+    --background: 240 10% 6%;
+    --foreground: 180 100% 95%;
+    --card: 240 12% 10%;
+    --card-foreground: 180 100% 95%;
+    --popover: 240 15% 8%;
+    --popover-foreground: 180 100% 95%;
+    --primary: 180 100% 50%;
+    --primary-foreground: 240 10% 6%;
+    --secondary: 280 100% 65%;
+    --secondary-foreground: 240 10% 6%;
+    --muted: 240 10% 15%;
+    --muted-foreground: 180 20% 70%;
+    --accent: 320 100% 60%;
+    --accent-foreground: 240 10% 6%;
+    --destructive: 0 85% 60%;
+    --destructive-foreground: 180 100% 95%;
+    --border: 180 50% 25%;
+    --input: 240 12% 12%;
+    --ring: 180 100% 50%;
+    --sidebar-background: 240 12% 8%;
+    --sidebar-foreground: 180 100% 95%;
+    --sidebar-primary: 180 100% 50%;
+    --sidebar-primary-foreground: 240 10% 6%;
+    --sidebar-accent: 240 12% 15%;
+    --sidebar-accent-foreground: 180 100% 95%;
+    --sidebar-border: 180 50% 25%;
+    --sidebar-ring: 180 100% 50%;
   }
 }
 
@@ -87,5 +92,39 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-family: 'Orbitron', 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  /* Futuristic Glow Effects */
+  .glow-cyan {
+    box-shadow: 0 0 20px hsl(180 100% 50% / 0.4),
+                0 0 40px hsl(180 100% 50% / 0.2);
+  }
+
+  .glow-purple {
+    box-shadow: 0 0 20px hsl(280 100% 65% / 0.4),
+                0 0 40px hsl(280 100% 65% / 0.2);
+  }
+
+  .glow-pink {
+    box-shadow: 0 0 20px hsl(320 100% 60% / 0.4),
+                0 0 40px hsl(320 100% 60% / 0.2);
+  }
+
+  /* Neon Border Animation */
+  .neon-border {
+    border: 1px solid hsl(180 100% 50% / 0.5);
+    box-shadow: 0 0 10px hsl(180 100% 50% / 0.3),
+                inset 0 0 10px hsl(180 100% 50% / 0.1);
+  }
+
+  /* Holographic Gradient */
+  .holographic {
+    background: linear-gradient(
+      135deg,
+      hsl(180 100% 50% / 0.1) 0%,
+      hsl(280 100% 65% / 0.1) 50%,
+      hsl(320 100% 60% / 0.1) 100%
+    );
   }
 }
