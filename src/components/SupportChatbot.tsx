@@ -16,7 +16,7 @@ export const SupportChatbot = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Hi! I'm here to help answer your questions about 4D LegalTech AI. How can I support you today?",
+      content: "Hi! I'm here to answer questions about how 4D LegalTech AI works. I can explain features, pricing, and general information, but I can't give legal advice. How can I help?",
     },
   ]);
   const [input, setInput] = useState("");
