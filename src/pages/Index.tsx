@@ -293,10 +293,10 @@ const Index = () => {
   const [validationErrors, setValidationErrors] = useState({ name: "", email: "" });
   const [isFormValid, setIsFormValid] = useState(false);
 
-  // Countdown timer (set to 30 days from now for demo)
+  // Countdown timer (set to 7 days from now for demo)
   useEffect(() => {
     const targetDate = new Date();
-    targetDate.setDate(targetDate.getDate() + 30);
+    targetDate.setDate(targetDate.getDate() + 7);
 
     const interval = setInterval(() => {
       const now = new Date().getTime();
