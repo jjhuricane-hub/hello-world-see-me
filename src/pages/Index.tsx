@@ -491,13 +491,13 @@ const Index = () => {
                 <h1 className="font-orbitron font-bold text-4xl md:text-6xl mb-6 text-primary animate-fade-in" style={{
                   textShadow: '0 0 20px hsl(var(--primary)), 0 0 40px hsl(var(--primary) / 0.5)'
                 }}>
-                  Choose Your Justice Plan
+                  Stop Getting Gaslit in Family Court.
                 </h1>
                 <h2 className="font-orbitron font-bold text-2xl md:text-3xl mb-8 text-foreground animate-fade-in">
-                  AI-Powered Legal Support for Family Court Cases
+                  Let AI help turn your evidence into federal court–grade ammunition.
                 </h2>
                 <p className="font-inter text-lg md:text-xl text-foreground/90 mb-8 animate-slide-up leading-relaxed">
-                  Transform your evidence into court-ready federal filings with the world's first automated legal platform designed by a parent who lived it.
+                  Upload your custody battle evidence — texts, emails, documents, and other records you lawfully control. Our litigation engine organizes it into a verified chronology, detects parental alienation and DARVO patterns, generates IRAC-style draft legal analyses with citations, and exports draft PDF binders you can review with a licensed attorney before filing.
                 </p>
                 
                 <blockquote className="bg-card/70 backdrop-blur-md neon-border rounded-lg p-8 mb-8 animate-fade-in">
@@ -506,11 +506,15 @@ const Index = () => {
                   </p>
                 </blockquote>
                 
-                <div className="inline-flex items-center justify-center bg-primary/10 border border-primary/30 rounded-lg px-6 py-3 mb-8">
+                <div className="inline-flex items-center justify-center bg-primary/10 border border-primary/30 rounded-lg px-6 py-3 mb-4">
                   <p className="font-inter text-base md:text-lg text-foreground font-semibold">
                     No legal background required.
                   </p>
                 </div>
+                
+                <p className="font-inter text-xs text-muted-foreground mt-2 mb-8">
+                  Presale seats reserve future early access. They do not provide immediate app access or legal advice.
+                </p>
 
                 <div className="grid md:grid-cols-3 gap-6">
                   <div className="bg-card/60 backdrop-blur-md border border-primary/30 rounded-lg p-6 glow-cyan hover:scale-105 transition-transform duration-300">
@@ -533,22 +537,18 @@ const Index = () => {
           {/* Trust Indicators */}
           <section className="py-8 border-y border-primary/30 bg-card/40 backdrop-blur-lg">
             <div className="container mx-auto px-4">
-              <div className="grid md:grid-cols-4 gap-6 max-w-4xl mx-auto text-center">
+              <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto text-center">
                 <div className="animate-fade-in">
-                  <div className="font-orbitron font-bold text-2xl text-primary mb-1">12+</div>
-                  <div className="font-inter text-sm text-foreground/60">Years Experience</div>
+                  <div className="font-orbitron font-bold text-xl text-primary mb-2">Built From Real Cases</div>
+                  <div className="font-inter text-sm text-foreground/60">Built from 12+ years of documented family court experience and records.</div>
                 </div>
                 <div className="animate-fade-in" style={{ animationDelay: '0.1s' }}>
-                  <div className="font-orbitron font-bold text-2xl text-secondary mb-1">Federal</div>
-                  <div className="font-inter text-sm text-foreground/60">Court-Ready Outputs</div>
+                  <div className="font-orbitron font-bold text-xl text-secondary mb-2">Federal-Grade Focus</div>
+                  <div className="font-inter text-sm text-foreground/60">Designed for federal court–grade evidence packages, timelines, and issue breakdowns.</div>
                 </div>
                 <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
-                  <div className="font-orbitron font-bold text-2xl text-accent mb-1">IRAC</div>
-                  <div className="font-inter text-sm text-foreground/60">Pattern Recognition</div>
-                </div>
-                <div className="animate-fade-in" style={{ animationDelay: '0.3s' }}>
-                  <div className="font-orbitron font-bold text-2xl text-primary mb-1">Multi-Agent</div>
-                  <div className="font-inter text-sm text-foreground/60">AI Workflow System</div>
+                  <div className="font-orbitron font-bold text-xl text-accent mb-2">Abuse & Civil Rights Lens</div>
+                  <div className="font-inter text-sm text-foreground/60">Focused on parental alienation, DARVO, coercive control, and civil rights violations in family court.</div>
                 </div>
               </div>
             </div>
@@ -561,7 +561,7 @@ const Index = () => {
                 Choose Your Tier
               </h2>
               <p className="font-inter text-xl text-foreground/70 text-center mb-12 max-w-3xl mx-auto animate-slide-up">
-                Join the movement to expose family court fraud with AI-powered legal tools
+                Reserve your early-access seat to the litigation engine designed to help you organize evidence and build your case
               </p>
 
               {/* Name and Email Form */}
@@ -634,6 +634,9 @@ const Index = () => {
                   <Badge>Step 2</Badge>
                   <h3 className="font-sora font-bold text-2xl">Choose Your Plan</h3>
                 </div>
+                <p className="text-xs text-center text-muted-foreground mb-6 max-w-2xl mx-auto">
+                  Presale plans reserve future early access to 4D LegalTech AI. They do not provide immediate app access or legal services.
+                </p>
                 <div className="bg-gradient-to-r from-rose-500/10 to-amber-500/10 border border-rose-500/20 rounded-lg p-6 mb-8 text-center">
                   <h3 className="font-sora font-bold text-2xl mb-2">🚀 7-Day "Founders Drop" — TikTok-Exclusive</h3>
                   <p className="font-inter text-muted-foreground">Available for 7 days only • Never offered again • DSS/Gov't excluded</p>
@@ -712,9 +715,12 @@ const Index = () => {
               <div className="mt-20 pt-12 border-t border-border">
                 <div className="text-center mb-12">
                   <Badge variant="outline" className="mb-4">After Founders Week</Badge>
-                  <h3 className="font-sora font-bold text-3xl mb-4">Post-Launch Standard Pricing</h3>
-                  <p className="font-inter text-muted-foreground max-w-2xl mx-auto">
+                  <h3 className="font-sora font-bold text-3xl mb-4">Post-Launch Standard Pricing (Planned)</h3>
+                  <p className="font-inter text-muted-foreground max-w-2xl mx-auto mb-3">
                     After the 7-day presale ends, these will be the regular pricing tiers with renewable discounts for extended access.
+                  </p>
+                  <p className="font-inter text-xs text-muted-foreground max-w-2xl mx-auto">
+                    These prices are planned for after launch and may change. During the presale, you are only purchasing early-access reservations.
                   </p>
                 </div>
 
@@ -781,15 +787,15 @@ const Index = () => {
                 <img src={logo} alt="4D LegalTech AI" className="w-32 h-32 mx-auto mb-8 object-contain" />
 
                 <h1 className="font-sora font-bold text-4xl md:text-6xl mb-6 text-foreground">
-                  Choose Your Justice Plan
+                  Stop Getting Gaslit in Family Court.
                 </h1>
                 
                 <p className="font-sora text-2xl md:text-3xl font-bold text-primary mb-4 tracking-tight">
-                  AI-Powered Legal Support for Family Court Cases
+                  Let AI help turn your evidence into federal court–grade ammunition.
                 </p>
                 
                 <p className="font-inter text-xl md:text-2xl text-muted-foreground mb-8">
-                  Transform your evidence into court-ready federal filings with the world's first automated legal platform designed by a parent who lived it.
+                  Upload your custody battle evidence — texts, emails, documents, and other records you lawfully control. Our litigation engine organizes it into a verified chronology, detects parental alienation and DARVO patterns, generates IRAC-style draft legal analyses with citations, and exports draft PDF binders you can review with a licensed attorney before filing.
                 </p>
 
                 <div className="bg-card border border-border rounded-lg p-6 mb-8 text-left">
@@ -825,6 +831,49 @@ const Index = () => {
             </div>
           </section>
 
+          {/* What to Gather Section */}
+          <section className="py-20 md:py-32 bg-muted/30">
+            <div className="container mx-auto px-4">
+              <div className="max-w-3xl mx-auto">
+                <h2 className="font-sora font-bold text-3xl md:text-4xl text-center mb-8">
+                  What You Can Gather Now While You Wait
+                </h2>
+                <p className="font-inter text-lg text-muted-foreground text-center mb-8">
+                  While your presale seat reserves future early access, you can start preparing your case today so you're ready on day one.
+                </p>
+                <div className="bg-card border border-border rounded-lg p-8">
+                  <ul className="space-y-4 font-inter text-foreground">
+                    <li className="flex items-start gap-3">
+                      <FileText className="w-5 h-5 text-primary mt-0.5 shrink-0" />
+                      <span>Court orders, motions, and DSS/child-support records</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <FileText className="w-5 h-5 text-primary mt-0.5 shrink-0" />
+                      <span>Payment histories, wage garnishments, and financial affidavits</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <FileText className="w-5 h-5 text-primary mt-0.5 shrink-0" />
+                      <span>Text messages, emails, and message exports related to your case</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <FileText className="w-5 h-5 text-primary mt-0.5 shrink-0" />
+                      <span>Visitation and parenting-time logs, missed exchanges, police reports</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <FileText className="w-5 h-5 text-primary mt-0.5 shrink-0" />
+                      <span>Guardian ad litem reports, evaluations, and school records</span>
+                    </li>
+                  </ul>
+                  <div className="mt-6 p-4 bg-amber-500/10 border border-amber-500/20 rounded-lg">
+                    <p className="font-inter text-sm text-foreground">
+                      <strong>Important:</strong> Do not upload any sensitive evidence into 4D LegalTech AI until the platform is live and you have reviewed the Terms of Use and Privacy Policy. For now, store your files securely on your own devices or encrypted storage.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
           {/* FAQ Section */}
           <section className="py-20 md:py-32">
             <div className="container mx-auto px-4">
@@ -836,37 +885,37 @@ const Index = () => {
                 <Accordion type="single" collapsible>
                   <AccordionItem value="item-1">
                     <AccordionTrigger className="font-sora font-semibold">
-                      What is the 4D LegalTech AI Justice Engine?
+                      What is 4D LegalTech AI?
                     </AccordionTrigger>
                     <AccordionContent className="font-inter text-muted-foreground">
-                      The Justice Engine is an AI-powered legal analysis platform that helps parents fighting family court cases by automatically analyzing evidence, detecting DARVO patterns, creating timelines, and generating court-ready documents. Built by a parent who spent 12+ years in family court litigation.
+                      4D LegalTech AI is an end-to-end litigation engine that ingests raw evidence, builds verified chronologies, detects patterns of parental alienation and DARVO, produces IRAC-style legal analyses with linked exhibits, and exports litigation-grade PDF binders. It helps you organize evidence and generate draft documents, but all filings must be reviewed by a licensed attorney. Built from 12+ years of documented family court experience.
                     </AccordionContent>
                   </AccordionItem>
 
                   <AccordionItem value="item-2">
                     <AccordionTrigger className="font-sora font-semibold">
-                      How does the AI detect DARVO patterns?
+                      Is this a replacement for a lawyer?
                     </AccordionTrigger>
                     <AccordionContent className="font-inter text-muted-foreground">
-                      Our multi-agent AI workflow analyzes communications for Deny, Attack, Reverse Victim and Offender (DARVO) tactics commonly used in family court. It identifies patterns of manipulation, gaslighting, and false accusations with citations to specific evidence.
+                      No. 4D LegalTech AI does not provide legal advice and is not a law firm. It helps you organize evidence, detect patterns, and generate draft documents, but all filings must be reviewed, approved, and filed by a licensed attorney. We do not guarantee any outcome in any court or agency. Judges, not software, make legal decisions.
                     </AccordionContent>
                   </AccordionItem>
 
                   <AccordionItem value="item-3">
                     <AccordionTrigger className="font-sora font-semibold">
-                      Are the outputs court-ready?
+                      When will I get access to the platform?
                     </AccordionTrigger>
                     <AccordionContent className="font-inter text-muted-foreground">
-                      Yes! The platform generates IRAC (Issue, Rule, Application, Conclusion) analyses and federal complaint packages based on real court filings. All outputs include proper citations and formatting suitable for court submission. However, we recommend review by a licensed attorney.
+                      Presale purchases reserve early-access seats. Access begins when your early-access account is activated. You will be notified via email when your tier is ready. During the presale, you are purchasing future access, not immediate app access.
                     </AccordionContent>
                   </AccordionItem>
 
                   <AccordionItem value="item-4">
                     <AccordionTrigger className="font-sora font-semibold">
-                      What's the difference between Early Access and Founders Circle?
+                      How does pattern detection work?
                     </AccordionTrigger>
                     <AccordionContent className="font-inter text-muted-foreground">
-                      Early Access ($50) gives you 90 days early platform access with 3 months of premium features. Founders Circle ($100) includes 12 months of premium access, priority support, advanced DARVO detection, and quarterly Q&A sessions with the founder. It's the best value for serious advocates.
+                      Our system analyzes your evidence against known patterns of parental alienation, DARVO (Deny, Attack, Reverse Victim and Offender), coercive control, and due process failures. The system is designed to help you see where your rights may have been violated, trained on patterns observed in many family law matters and regularly refined for quality.
                     </AccordionContent>
                   </AccordionItem>
 
@@ -897,10 +946,10 @@ const Index = () => {
             <div className="container mx-auto px-4">
               <div className="max-w-3xl mx-auto text-center">
                 <h2 className="font-sora font-bold text-3xl md:text-4xl mb-6">
-                  Ready to Turn Your Evidence Into Action?
+                  Ready to Start Organizing Your Evidence?
                 </h2>
                 <p className="font-inter text-xl text-muted-foreground mb-8">
-                  Choose your plan and join the movement to expose family court fraud with AI-powered legal tools.
+                  Choose your presale seat and prepare your case with AI-powered litigation support tools.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
                   <Button 
@@ -937,7 +986,7 @@ const Index = () => {
               <div className="space-y-3">
                 <h3 className="font-sora font-bold text-lg text-foreground">Legal & Compliance Notice</h3>
                 <p className="font-inter text-sm text-muted-foreground leading-relaxed">
-                  4D LegalTech AI and the Parental Alienation Analyzer provide software that helps users organize evidence and generate draft documents. We are not a law firm, we do not offer legal advice, and use of our products does not create an attorney-client relationship. Always consult a licensed attorney about your case. Outputs may require attorney review and local-court formatting before filing.
+                  4D LegalTech AI and the Parental Alienation Analyzer provide software tools that help users organize evidence and generate draft documents. We are not a law firm, we do not offer legal advice, and use of this platform does not create an attorney–client relationship. All outputs are for informational and educational purposes only and must be reviewed by a licensed attorney before filing in any court.
                 </p>
               </div>
 
