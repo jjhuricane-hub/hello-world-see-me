@@ -292,6 +292,7 @@ const Index = () => {
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0 });
   const [validationErrors, setValidationErrors] = useState({ name: "", email: "" });
   const [isFormValid, setIsFormValid] = useState(false);
+  const [seatInventory, setSeatInventory] = useState<Record<string, { remaining: number; soldOut: boolean; original: number }>>({});
 
   // Countdown timer (set to 7 days from now for demo)
   useEffect(() => {
@@ -310,6 +311,60 @@ const Index = () => {
     }, 1000);
 
     return () => clearInterval(interval);
+  }, []);
+
+  // Fetch seat inventory and subscribe to real-time updates
+  useEffect(() => {
+    const fetchSeatInventory = async () => {
+      const { data, error } = await supabase
+        .from('presale_seat_inventory')
+        .select('tier_id, remaining_seats, is_sold_out, original_seats');
+
+      if (error) {
+        console.error('Error fetching seat inventory:', error);
+        return;
+      }
+
+      const inventory: Record<string, { remaining: number; soldOut: boolean; original: number }> = {};
+      data.forEach(item => {
+        inventory[item.tier_id] = {
+          remaining: item.remaining_seats,
+          soldOut: item.is_sold_out,
+          original: item.original_seats
+        };
+      });
+      setSeatInventory(inventory);
+    };
+
+    fetchSeatInventory();
+
+    // Set up realtime subscription for live seat count updates
+    const channel = supabase
+      .channel('seat-inventory-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'presale_seat_inventory'
+        },
+        (payload) => {
+          const updated = payload.new as any;
+          setSeatInventory(prev => ({
+            ...prev,
+            [updated.tier_id]: {
+              remaining: updated.remaining_seats,
+              soldOut: updated.is_sold_out,
+              original: updated.original_seats
+            }
+          }));
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   // Validate form whenever formData changes
@@ -357,6 +412,16 @@ const Index = () => {
   };
 
   const handleTierSelect = async (tierId: string) => {
+    // Check if tier is sold out
+    if (seatInventory[tierId]?.soldOut) {
+      toast({
+        title: "This tier is sold out",
+        description: "Please choose another tier or join the waitlist.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     if (!formData.email || !formData.name) {
       toast({
         title: "Missing information",
@@ -672,8 +737,25 @@ const Index = () => {
                         <CardDescription className="font-inter text-sm">
                           {tier.bestFor}
                         </CardDescription>
-                        {tier.seats && (
-                          <Badge variant="outline" className="mt-2">{tier.seats}</Badge>
+                        {tier.isPresale && (
+                          <div className="mt-2">
+                            {seatInventory[tier.id]?.soldOut ? (
+                              <Badge variant="destructive" className="animate-pulse">
+                                🚫 SOLD OUT
+                              </Badge>
+                            ) : seatInventory[tier.id] ? (
+                              <div className="flex flex-col items-center gap-1">
+                                <Badge variant="outline">
+                                  {seatInventory[tier.id].remaining.toLocaleString()} / {seatInventory[tier.id].original.toLocaleString()} seats left
+                                </Badge>
+                                {seatInventory[tier.id].remaining <= 50 && (
+                                  <span className="text-xs text-destructive animate-pulse font-semibold">⚡ Almost Gone!</span>
+                                )}
+                              </div>
+                            ) : (
+                              <Badge variant="outline" className="opacity-50">Loading...</Badge>
+                            )}
+                          </div>
                         )}
                         {tier.renewal && (
                           <p className="text-xs text-primary mt-2 font-semibold">{tier.renewal}</p>
@@ -700,9 +782,21 @@ const Index = () => {
                           variant={tier.ctaVariant}
                           className="w-full font-inter"
                           onClick={() => handleTierSelect(tier.id)}
-                          disabled={isSubmitting && selectedTier === tier.id}
+                          disabled={isSubmitting && selectedTier === tier.id || seatInventory[tier.id]?.soldOut}
                         >
-                          {isSubmitting && selectedTier === tier.id ? "Processing..." : tier.cta}
+                          {seatInventory[tier.id]?.soldOut ? (
+                            <>
+                              <X className="mr-2 h-5 w-5" />
+                              Sold Out
+                            </>
+                          ) : isSubmitting && selectedTier === tier.id ? (
+                            "Processing..."
+                          ) : (
+                            <>
+                              {tier.cta}
+                              <ArrowDown className="ml-2 h-5 w-5" />
+                            </>
+                          )}
                         </Button>
                       </CardFooter>
                     </Card>

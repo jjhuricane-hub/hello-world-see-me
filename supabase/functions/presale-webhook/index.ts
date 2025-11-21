@@ -150,6 +150,28 @@ const handler = async (req: Request): Promise<Response> => {
 
       console.log("Purchase saved:", data);
 
+      // Decrement seat count
+      const { data: seatData, error: seatError } = await supabase
+        .from('presale_seat_inventory')
+        .select('remaining_seats, is_sold_out')
+        .eq('tier_id', tier)
+        .single();
+
+      if (seatError) {
+        console.error('Error fetching seat inventory:', seatError);
+      } else if (seatData && !seatData.is_sold_out) {
+        const { error: updateError } = await supabase
+          .from('presale_seat_inventory')
+          .update({ remaining_seats: seatData.remaining_seats - 1 })
+          .eq('tier_id', tier);
+
+        if (updateError) {
+          console.error('Error updating seat inventory:', updateError);
+        } else {
+          console.log(`Seat decremented for ${tier}. Remaining: ${seatData.remaining_seats - 1}`);
+        }
+      }
+
       // Send welcome email
       const template = EMAIL_TEMPLATES[tier];
       

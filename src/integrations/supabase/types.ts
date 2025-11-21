@@ -53,6 +53,33 @@ export type Database = {
         }
         Relationships: []
       }
+      presale_seat_inventory: {
+        Row: {
+          created_at: string | null
+          is_sold_out: boolean | null
+          original_seats: number
+          remaining_seats: number
+          tier_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          is_sold_out?: boolean | null
+          original_seats: number
+          remaining_seats: number
+          tier_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          is_sold_out?: boolean | null
+          original_seats?: number
+          remaining_seats?: number
+          tier_id?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       waitlist_signups: {
         Row: {
           created_at: string
