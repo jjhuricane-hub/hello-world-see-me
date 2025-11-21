@@ -40,6 +40,30 @@ const handler = async (req: Request): Promise<Response> => {
       throw new Error(`Invalid tier: ${tier}`);
     }
 
+    // Check if tier is sold out
+    const supabaseUrl = Deno.env.get("SUPABASE_URL");
+    const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+    
+    if (supabaseUrl && supabaseKey) {
+      const { createClient } = await import("https://esm.sh/@supabase/supabase-js@2.39.3");
+      const supabase = createClient(supabaseUrl, supabaseKey);
+      
+      const { data: seatData, error: seatError } = await supabase
+        .from('presale_seat_inventory')
+        .select('is_sold_out')
+        .eq('tier_id', tier)
+        .single();
+
+      if (seatError) {
+        console.error('Error checking seat availability:', seatError);
+        throw new Error('Unable to verify seat availability');
+      }
+
+      if (seatData && seatData.is_sold_out) {
+        throw new Error('This tier is sold out. Please choose another option.');
+      }
+    }
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: [
