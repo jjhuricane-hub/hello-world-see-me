@@ -17,12 +17,12 @@ interface CheckoutRequest {
 }
 
 const TIER_PRICES: Record<string, { amount: number; label: string }> = {
-  analyzer_lifetime_founder: { amount: 490000, label: "Analyzer - Lifetime Founder" },
-  analyzer_annual_founder: { amount: 200000, label: "Analyzer - Annual Founder" },
-  analyzer_monthly_founder: { amount: 50000, label: "Analyzer - Monthly Founder" },
-  strategist_lifetime_founder: { amount: 990000, label: "Strategist - Lifetime Founder" },
-  strategist_annual_founder: { amount: 400000, label: "Strategist - Annual Founder" },
-  strategist_monthly_founder: { amount: 100000, label: "Strategist - Monthly Founder" },
+  analyzer_lifetime_founder: { amount: 4900, label: "Analyzer Lifetime Founder (Presale Seat)" },
+  analyzer_annual_founder: { amount: 2000, label: "Analyzer Annual Founder (Presale Seat)" },
+  parent_single_case: { amount: 16500, label: "Parent Single-Case License (Presale Seat)" },
+  parent_multi_case: { amount: 29000, label: "Parent Multi-Case License (Presale Seat)" },
+  small_firm_monthly: { amount: 24900, label: "Small Firm Monthly Founders (Presale Seat)" },
+  small_firm_annual: { amount: 199900, label: "Small Firm Annual Founders (Presale Seat)" },
 };
 
 const handler = async (req: Request): Promise<Response> => {
