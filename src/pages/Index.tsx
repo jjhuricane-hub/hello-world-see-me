@@ -25,7 +25,7 @@ const PRESALE_TIERS = [
   {
     id: "pioneer_parent_plan",
     name: "⚖️ Pioneer Parent Plan",
-    upfrontTotal: 74.97, // 3 months @ $24.99/mo billed upfront
+    upfrontTotal: 24.99,
     upfrontDetail: "Includes 3 months of access (billed upfront)",
     thenDetail: "Then $12.49/month (locked founder pricing while active)",
     badge: "Most Popular",
@@ -51,7 +51,7 @@ const PRESALE_TIERS = [
   {
     id: "founders_circle",
     name: "🛡️ Founders Circle",
-    upfrontTotal: 299.94, // 6 months @ $49.99/mo billed upfront
+    upfrontTotal: 49.99,
     upfrontDetail: "Includes 6 months of access (billed upfront)",
     thenDetail: "Then $9.99/month (locked founder pricing while active)",
     badge: "Founders Badge + Certificate",
