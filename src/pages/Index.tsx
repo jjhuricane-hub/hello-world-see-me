@@ -23,46 +23,54 @@ const emailSchema = z.object({
 // PRESALE TIERS - 7-Day "Founders Drop" (TikTok-Exclusive)
 const PRESALE_TIERS = [
   {
-    id: "analyzer_lifetime_founder",
-    name: "🧠 Analyzer Lifetime Founder",
-    price: 49,
-    badge: "Lifetime Access",
-    badgeVariant: "secondary" as const,
-    icon: Gem,
-    iconColor: "text-purple-600",
-    bestFor: "Founders badge + priority updates",
-    seats: "500 seats",
+    id: "pioneer_parent_plan",
+    name: "⚖️ Pioneer Parent Plan",
+    upfrontTotal: 74.97, // 3 months @ $24.99/mo billed upfront
+    upfrontDetail: "Includes 3 months of access (billed upfront)",
+    thenDetail: "Then $12.49/month (locked founder pricing while active)",
+    badge: "Most Popular",
+    badgeVariant: "default" as const,
+    icon: Zap,
+    iconColor: "text-amber-600",
+    bestFor: "Priority onboarding + early module windows",
+    seats: "Shared 1,000-seat pool",
+    inventoryKey: "parent_presale_shared",
     features: [
-      "Lifetime access to Parental Alienation Analyzer",
-      "Founders badge & recognition",
-      "Priority updates & feature access",
-      "Never pay again",
-      "One-time payment only",
+      "Presale seat reservation (no immediate access)",
+      "Locked founder pricing while subscription remains active",
+      "Priority onboarding queue at launch",
+      "Early access windows for new modules",
+      "Downloadable 4D Founders Digital Certificate",
+      "Weekly TikTok Founding Supporters Roll Call (name/handle displayed)"
     ],
-    cta: "Claim Lifetime Access",
-    ctaVariant: "secondary" as const,
+    cta: "Reserve Pioneer Seat",
+    ctaVariant: "default" as const,
+    highlight: true,
     isPresale: true,
   },
   {
-    id: "analyzer_annual_founder",
-    name: "🕊️ Analyzer Annual Founder",
-    price: 20,
-    badge: "Early Adopter",
-    badgeVariant: "default" as const,
-    icon: Award,
-    iconColor: "text-blue-600",
-    bestFor: "1-year Analyzer access",
-    seats: "1,000 seats",
+    id: "founders_circle",
+    name: "🛡️ Founders Circle",
+    upfrontTotal: 299.94, // 6 months @ $49.99/mo billed upfront
+    upfrontDetail: "Includes 6 months of access (billed upfront)",
+    thenDetail: "Then $9.99/month (locked founder pricing while active)",
+    badge: "Founders Badge + Certificate",
+    badgeVariant: "secondary" as const,
+    icon: Crown,
+    iconColor: "text-rose-600",
+    bestFor: "Highest support + top priority",
+    seats: "500 seats",
+    inventoryKey: "founders_circle",
     features: [
-      "1-year access to Parental Alienation Analyzer",
-      "Early Adopter credit",
-      "Community access",
-      "Educational resources",
-      "One-time payment",
+      "Presale seat reservation (no immediate access)",
+      "Founders Badge (download + profile display)",
+      "Downloadable 4D Founders Digital Certificate",
+      "Guaranteed TikTok Founders Roll Call mention",
+      "Priority feature request queue",
+      "Quarterly group roadmap call"
     ],
-    cta: "Get Early Access",
-    ctaVariant: "default" as const,
-    highlight: true,
+    cta: "Join Founders Circle",
+    ctaVariant: "secondary" as const,
     isPresale: true,
   },
   {
@@ -412,8 +420,10 @@ const Index = () => {
   };
 
   const handleTierSelect = async (tierId: string) => {
-    // Check if tier is sold out
-    if (seatInventory[tierId]?.soldOut) {
+    // Check if tier is sold out using inventoryKey if available
+    const tier = ACTIVE_PRICING.find(t => t.id === tierId);
+    const inventoryKey = (tier as any)?.inventoryKey ?? tierId;
+    if (seatInventory[inventoryKey]?.soldOut) {
       toast({
         title: "This tier is sold out",
         description: "Please choose another tier or join the waitlist.",
@@ -704,7 +714,9 @@ const Index = () => {
                 </p>
                 <div className="bg-gradient-to-r from-rose-500/10 to-amber-500/10 border border-rose-500/20 rounded-lg p-6 mb-8 text-center">
                   <h3 className="font-sora font-bold text-2xl mb-2">🚀 7-Day "Founders Drop" — TikTok-Exclusive</h3>
-                  <p className="font-inter text-muted-foreground">Available for 7 days only • Never offered again • DSS/Gov't excluded</p>
+                  <p className="font-inter text-muted-foreground">
+                    Seats are strictly limited • Founder pricing locked while active • Reserves future access (no immediate access) • DSS/Gov't licensing post-presale only
+                  </p>
                 </div>
                 
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto mb-16">
@@ -731,32 +743,49 @@ const Index = () => {
                         </div>
                         <CardTitle className="font-sora text-base">{tier.name}</CardTitle>
                         <div className="font-sora text-3xl font-bold text-primary">
-                          ${tier.price}
-                          {tier.recurring && <span className="text-sm font-normal text-muted-foreground block">{tier.recurring}</span>}
+                          {(tier as any).upfrontTotal ? (
+                            <>
+                              ${(tier as any).upfrontTotal.toFixed(2)} <span className="text-sm font-normal">today</span>
+                            </>
+                          ) : (
+                            <>
+                              ${(tier as any).price}
+                              {(tier as any).recurring && <span className="text-sm font-normal text-muted-foreground block">{(tier as any).recurring}</span>}
+                            </>
+                          )}
                         </div>
+                        {(tier as any).upfrontDetail && (
+                          <p className="text-xs text-muted-foreground mt-1">{(tier as any).upfrontDetail}</p>
+                        )}
+                        {(tier as any).thenDetail && (
+                          <p className="text-xs text-primary font-semibold mt-1">{(tier as any).thenDetail}</p>
+                        )}
                         <CardDescription className="font-inter text-sm">
                           {tier.bestFor}
                         </CardDescription>
-                        {tier.isPresale && (
-                          <div className="mt-2">
-                            {seatInventory[tier.id]?.soldOut ? (
-                              <Badge variant="destructive" className="animate-pulse">
-                                🚫 SOLD OUT
-                              </Badge>
-                            ) : seatInventory[tier.id] ? (
-                              <div className="flex flex-col items-center gap-1">
-                                <Badge variant="outline">
-                                  {seatInventory[tier.id].remaining.toLocaleString()} / {seatInventory[tier.id].original.toLocaleString()} seats left
+                        {tier.isPresale && (() => {
+                          const inventoryKey = (tier as any).inventoryKey ?? tier.id;
+                          return (
+                            <div className="mt-2">
+                              {seatInventory[inventoryKey]?.soldOut ? (
+                                <Badge variant="destructive" className="animate-pulse">
+                                  🚫 SOLD OUT
                                 </Badge>
-                                {seatInventory[tier.id].remaining <= 50 && (
-                                  <span className="text-xs text-destructive animate-pulse font-semibold">⚡ Almost Gone!</span>
-                                )}
-                              </div>
-                            ) : (
-                              <Badge variant="outline" className="opacity-50">Loading...</Badge>
-                            )}
-                          </div>
-                        )}
+                              ) : seatInventory[inventoryKey] ? (
+                                <div className="flex flex-col items-center gap-1">
+                                  <Badge variant="outline">
+                                    {seatInventory[inventoryKey].remaining.toLocaleString()} / {seatInventory[inventoryKey].original.toLocaleString()} seats left
+                                  </Badge>
+                                  {seatInventory[inventoryKey].remaining <= 50 && (
+                                    <span className="text-xs text-destructive animate-pulse font-semibold">⚡ Almost Gone!</span>
+                                  )}
+                                </div>
+                              ) : (
+                                <Badge variant="outline" className="opacity-50">Loading...</Badge>
+                              )}
+                            </div>
+                          );
+                        })()}
                         {tier.renewal && (
                           <p className="text-xs text-primary mt-2 font-semibold">{tier.renewal}</p>
                         )}
@@ -778,26 +807,31 @@ const Index = () => {
                         </ul>
                       </CardContent>
                       <CardFooter>
-                        <Button 
-                          variant={tier.ctaVariant}
-                          className="w-full font-inter"
-                          onClick={() => handleTierSelect(tier.id)}
-                          disabled={isSubmitting && selectedTier === tier.id || seatInventory[tier.id]?.soldOut}
-                        >
-                          {seatInventory[tier.id]?.soldOut ? (
-                            <>
-                              <X className="mr-2 h-5 w-5" />
-                              Sold Out
-                            </>
-                          ) : isSubmitting && selectedTier === tier.id ? (
-                            "Processing..."
-                          ) : (
-                            <>
-                              {tier.cta}
-                              <ArrowDown className="ml-2 h-5 w-5" />
-                            </>
-                          )}
-                        </Button>
+                        {(() => {
+                          const inventoryKey = (tier as any).inventoryKey ?? tier.id;
+                          return (
+                            <Button 
+                              variant={tier.ctaVariant}
+                              className="w-full font-inter"
+                              onClick={() => handleTierSelect(tier.id)}
+                              disabled={isSubmitting && selectedTier === tier.id || seatInventory[inventoryKey]?.soldOut}
+                            >
+                              {seatInventory[inventoryKey]?.soldOut ? (
+                                <>
+                                  <X className="mr-2 h-5 w-5" />
+                                  Sold Out
+                                </>
+                              ) : isSubmitting && selectedTier === tier.id ? (
+                                "Processing..."
+                              ) : (
+                                <>
+                                  {tier.cta}
+                                  <ArrowDown className="ml-2 h-5 w-5" />
+                                </>
+                              )}
+                            </Button>
+                          );
+                        })()}
                       </CardFooter>
                     </Card>
                   );
@@ -1028,6 +1062,24 @@ const Index = () => {
                     </AccordionTrigger>
                     <AccordionContent className="font-inter text-muted-foreground">
                       We offer a 30-day money-back guarantee on all paid tiers. If you're not satisfied, contact us at info@lastchanceproject.com for a full refund.
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="item-7">
+                    <AccordionTrigger className="font-sora font-semibold">
+                      When does the monthly billing start?
+                    </AccordionTrigger>
+                    <AccordionContent className="font-inter text-muted-foreground">
+                      Monthly billing begins after your initial access period ends (3 months for Pioneer Parent, 6 months for Founders Circle). You'll receive instructions at launch with your account setup details. You can cancel before your first renewal if you choose. Your locked founder pricing remains in effect as long as your subscription stays active.
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="item-8">
+                    <AccordionTrigger className="font-sora font-semibold">
+                      What exactly am I buying today?
+                    </AccordionTrigger>
+                    <AccordionContent className="font-inter text-muted-foreground">
+                      Today you're purchasing a presale seat reservation plus your initial access period billed upfront. This is not immediate app access — access begins when we launch. This is not legal services or legal advice. You're reserving your spot and locking in founder pricing before the public launch.
                     </AccordionContent>
                   </AccordionItem>
                 </Accordion>
